@@ -7,6 +7,31 @@ the settings screen itself, and nothing is stored in save games, so the mod can 
 Built against Bannerlord **v1.4.8**. Requires [Harmony](https://www.nexusmods.com/mountandblade2bannerlord/mods/2006)
 and [MCM v5](https://www.nexusmods.com/mountandblade2bannerlord/mods/612) (which itself needs ButterLib and UIExtenderEx).
 
+## Screenshots
+
+In-game screenshots with the mod installed.
+
+![The Customisable UI settings screen in Mod Options, with its ten groups](docs/screenshots/03-settings-screen.webp)
+
+The preset list: the accessibility presets come first, then 15 colour pairs.
+
+<p>
+  <img src="docs/screenshots/02-presets-accessible.png" alt="Preset list, top: Custom, Default, then the Accessible presets" width="320">
+  <img src="docs/screenshots/01-presets-colour-pairs.png" alt="Preset list, bottom: the colour pairs from Black and White to Parchment and Ink" width="320">
+</p>
+
+![Party screen](docs/screenshots/05-party-screen.webp)
+
+![Inventory](docs/screenshots/10-inventory.webp)
+
+![Recruitment](docs/screenshots/07-recruitment.webp)
+
+![Quests screen](docs/screenshots/06-quests-screen.webp)
+
+![Smithy, Refine tab](docs/screenshots/08-smithy-refine.webp)
+
+![The battle crosshair in the arena, recoloured](docs/screenshots/04-crosshair-arena.webp)
+
 ## What it does
 
 - **Recolours the interface.** Panels and backgrounds, frames and borders, and buttons and controls each get a colour
@@ -218,6 +243,7 @@ Module/                       Non-code module files, copied as-is into the modul
   SubModule.xml               Module manifest ($version$ and $gameversion$ are filled in at build time)
   UiRoles.txt                 User-editable role overrides
 nexus/description.bbcode.txt  Text for the Nexus mod page
+docs/screenshots/             Screenshots shown in this README
 CHANGELOG.md                  What changed in each version
 artifacts/                    Build output (git-ignored)
 releases/                     The Nexus upload for each released version, copied from artifacts/ and committed

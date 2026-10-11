@@ -4,6 +4,8 @@
 # Visual Studio solution files are CRLF.
 *.sln text eol=crlf
 
+*.png binary
+*.webp binary
 *.zip binary
 *.dll binary
 *.pdb binary
