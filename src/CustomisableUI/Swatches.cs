@@ -68,8 +68,12 @@ namespace CustomisableUI
             new Swatch("Deep Blue", "#0072B2"),
         };
 
-        private static readonly string[] AllNamesCache = BuildNames(includeAuto: false);
-        private static readonly string[] TextNamesCache = BuildNames(includeAuto: true);
+        // The names above and Vanilla / Custom / Auto are the keys the code works with (IndexOf("Black")), and they stay
+        // English. What the dropdowns show is the same list with each name tagged for translation (see Tagged).
+        private static readonly string[] AllKeys = BuildNames(includeAuto: false, tagged: false);
+        private static readonly string[] TextKeys = BuildNames(includeAuto: true, tagged: false);
+        private static readonly string[] AllNamesCache = BuildNames(includeAuto: false, tagged: true);
+        private static readonly string[] TextNamesCache = BuildNames(includeAuto: true, tagged: true);
 
         // A fresh list each call: MCM's dropdown owns the list it is given.
         public static IEnumerable<string> AllNames()
@@ -85,14 +89,25 @@ namespace CustomisableUI
 
         public static int IndexOf(string name)
         {
-            int index = Array.IndexOf(AllNamesCache, name);
+            int index = Array.IndexOf(AllKeys, name);
             return index < 0 ? 0 : index;
         }
 
         public static int TextIndexOf(string name)
         {
-            int index = Array.IndexOf(TextNamesCache, name);
+            int index = Array.IndexOf(TextKeys, name);
             return index < 0 ? 0 : index;
+        }
+
+        // "Royal Purple" -> "{=CUI_Colour_RoyalPurple}Royal Purple". The game shows the text after the tag unless the
+        // player's language has a translation for the tag. Vanilla is shared with the font dropdowns.
+        internal static string Tagged(string name)
+        {
+            string id = name == Vanilla ? "CUI_Vanilla"
+                : name == Custom ? "CUI_Colour_Custom"
+                : name == Auto ? "CUI_Colour_Auto"
+                : "CUI_Colour_" + name.Replace(" ", string.Empty);
+            return "{=" + id + "}" + name;
         }
 
         // Resolves a selection from the text colour dropdown (the TextNames list).
@@ -168,19 +183,24 @@ namespace CustomisableUI
             return true;
         }
 
-        private static string[] BuildNames(bool includeAuto)
+        private static string[] BuildNames(bool includeAuto, bool tagged)
         {
-            var names = new List<string> { Vanilla };
+            var names = new List<string> { Tag(Vanilla, tagged) };
             if (includeAuto)
             {
-                names.Add(Auto);
+                names.Add(Tag(Auto, tagged));
             }
             foreach (Swatch swatch in Named)
             {
-                names.Add(swatch.Name);
+                names.Add(Tag(swatch.Name, tagged));
             }
-            names.Add(Custom);
+            names.Add(Tag(Custom, tagged));
             return names.ToArray();
+        }
+
+        private static string Tag(string name, bool tagged)
+        {
+            return tagged ? Tagged(name) : name;
         }
     }
 }

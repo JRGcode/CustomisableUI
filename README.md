@@ -215,6 +215,15 @@ state, which keeps the mod out of the game's nameplate classes.
 - **Crosshair size** and the shape of its markers come from the game's layout and sprites and aren't adjustable.
 - The mod is untested on the Xbox/Game Pass build (the zip includes its binaries) and with War Sails disabled.
 
+## Translating
+
+The mod can be translated into any language the game supports, without any programming: every setting name, explanation,
+colour name, preset and message comes from a text file, `Module/ModuleData/Languages/EN/strings.xml`, and a translation is
+a copy of it with the text replaced. Untranslated strings are shown in English, so a partial translation is fine.
+
+There are no translations yet, and contributions are welcome. **[docs/TRANSLATING.md](docs/TRANSLATING.md)** has the
+steps, the game's language ids and a checker (`tools/check-translations.ps1`) you can run before sending it in.
+
 ## Development
 
 ### Layout
@@ -239,10 +248,14 @@ src/CustomisableUI/           C# project (the DLL)
   CrashDiagnostics.cs         Full call stack for a failing text lookup or an unhandled exception
   Log.cs                      Logging
 tests/CustomisableUI.Tests/   Checks that run against the real game assemblies (see Testing)
+  Translations.cs             Finds every translatable string; checks them and the English template
 Module/                       Non-code module files, copied as-is into the module folder
   SubModule.xml               Module manifest ($version$ and $gameversion$ are filled in at build time)
   UiRoles.txt                 User-editable role overrides
+  ModuleData/Languages/       One folder per language. EN is the generated template; translations are added beside it
+tools/check-translations.ps1  Checks translation files against the English template (needs only PowerShell)
 nexus/description.bbcode.txt  Text for the Nexus mod page
+docs/TRANSLATING.md           How to add a language
 docs/screenshots/             Screenshots shown in this README
 CHANGELOG.md                  What changed in each version
 artifacts/                    Build output (git-ignored)
@@ -285,7 +298,10 @@ launching the game or deploying anything. The exit code is the number of failure
 - panel, text, outline and shadow styling; good / bad / warning; crosshair; ally / enemy / neutral (read against the
   game's own `PartyNameplateVM` colours); keeping other mods' colours; screen dimming;
 - every brush in the game's own files, for invariants that must always hold (bars and scrollbars stay vanilla);
-- every Harmony hook binding to the real game method.
+- every Harmony hook binding to the real game method;
+- translations: every string the player can see is tagged for translation, and the English template
+  (`Module/ModuleData/Languages/EN/strings.xml`) matches the code. If you change any visible text, regenerate it with
+  `dotnet run --project tests/CustomisableUI.Tests -c Release -- --write-strings`.
 
 What it can't check is how things look: that needs the game running.
 

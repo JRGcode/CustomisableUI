@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+New
+- **Translation support.** Every setting name, explanation, group title, colour name, preset and the hotkey message can now
+  be translated by adding a language folder under `Module/ModuleData/Languages`, with no code changes. Untranslated text
+  stays in English. See `docs/TRANSLATING.md`. No translations are included yet.
+
 ## 1.1.0
 
 New

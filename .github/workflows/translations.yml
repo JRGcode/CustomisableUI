@@ -1,0 +1,23 @@
+name: Check translations
+
+# Runs tools/check-translations.ps1 whenever a language file changes, so a pull request that adds or edits a translation
+# gets feedback straight away. It needs no game install: it only compares the language folders with the English template.
+on:
+  pull_request:
+    paths:
+      - 'Module/ModuleData/Languages/**'
+      - 'tools/check-translations.ps1'
+  push:
+    branches: [master]
+    paths:
+      - 'Module/ModuleData/Languages/**'
+      - 'tools/check-translations.ps1'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check translation files
+        shell: pwsh
+        run: ./tools/check-translations.ps1

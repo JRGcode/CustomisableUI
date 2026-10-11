@@ -17,7 +17,7 @@ namespace CustomisableUI.Tests
             }
         }
 
-        private static int Main()
+        private static int Main(string[] args)
         {
             if (!Directory.Exists(GameFolder))
             {
@@ -49,6 +49,12 @@ namespace CustomisableUI.Tests
                 return null;
             };
 
+            // "-- --write-strings" regenerates the English language file from the code instead of running the checks.
+            if (Array.IndexOf(args, "--write-strings") >= 0)
+            {
+                return Translations.WriteEnglish();
+            }
+
             Console.WriteLine("Customisable UI checks against " + GameFolder);
 
             Tests.SwatchesChecks();
@@ -65,6 +71,7 @@ namespace CustomisableUI.Tests
             Tests.ScreenDimmingChecks();
             Tests.GameDataChecks();
             Tests.HooksChecks();
+            Translations.Checks();
 
             return Check.Report();
         }

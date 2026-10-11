@@ -47,3 +47,9 @@ Restyle Bannerlord's interface from the Mod Configuration Menu: recolour panels,
 [*]Steam, GOG, Epic and Xbox/Game Pass builds are all included.
 [*]Mods that restyle the same UI elements may combine in unexpected ways; disable one of them if the result looks wrong.
 [/list]
+
+[size=4][b]Translations[/b][/size]
+[list]
+[*]The settings screen can be translated into any language the game supports, with no programming: copy the English text file, translate it and send it in. Instructions are in [i]docs/TRANSLATING.md[/i] in the [url=https://github.com/JRGcode/CustomisableUI]source code on GitHub[/url].
+[*]Anything not translated is shown in English.
+[/list]

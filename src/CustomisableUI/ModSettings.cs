@@ -12,46 +12,49 @@ namespace CustomisableUI
     // so changes show up live, even on the settings screen itself.
     public sealed class ModSettings : AttributeGlobalSettings<ModSettings>
     {
-        private const string General = "1. General";
-        private const string Panels = "2. Panels & backgrounds";
-        private const string Frames = "3. Frames & borders";
-        private const string Buttons = "4. Buttons";
-        private const string TextGroup = "5. Text";
-        private const string Fonts = "6. Fonts";
-        private const string Grading = "7. Colour grading";
-        private const string Relations = "8. Allies, enemies & neutrals";
-        private const string Statuses = "9. Good, bad & warning";
-        private const string CrosshairGroup = "10. Crosshair";
+        // Every player-visible string in this file starts with a "{=CUI_...}" tag: the game looks the tag up in the
+        // player's language files (Module\ModuleData\Languages) and shows the English text after it when there is no
+        // translation. See docs/TRANSLATING.md. The tags are part of the text, so they are never shown to the player.
+        private const string General = "{=CUI_Group_General}1. General";
+        private const string Panels = "{=CUI_Group_Panels}2. Panels & backgrounds";
+        private const string Frames = "{=CUI_Group_Frames}3. Frames & borders";
+        private const string Buttons = "{=CUI_Group_Buttons}4. Buttons";
+        private const string TextGroup = "{=CUI_Group_Text}5. Text";
+        private const string Fonts = "{=CUI_Group_Fonts}6. Fonts";
+        private const string Grading = "{=CUI_Group_Grading}7. Colour grading";
+        private const string Relations = "{=CUI_Group_Relations}8. Allies, enemies & neutrals";
+        private const string Statuses = "{=CUI_Group_Statuses}9. Good, bad & warning";
+        private const string CrosshairGroup = "{=CUI_Group_Crosshair}10. Crosshair";
 
-        internal const string FontVanilla = "Vanilla (no change)";
+        internal const string FontVanilla = "{=CUI_Vanilla}Vanilla (no change)";
 
         internal static readonly string[] FontChoices =
         {
             FontVanilla,
-            "Fira Sans Light",
-            "Fira Sans Regular",
-            "Fira Sans Medium",
-            "Galahad (decorative)",
+            "{=CUI_Font_Light}Fira Sans Light",
+            "{=CUI_Font_Regular}Fira Sans Regular",
+            "{=CUI_Font_Medium}Fira Sans Medium",
+            "{=CUI_Font_Galahad}Galahad (decorative)",
         };
 
         internal static readonly string[] ContrastChoices =
         {
-            "Standard (3:1)",
-            "Good (4.5:1, WCAG AA)",
-            "Best (7:1, WCAG AAA)",
+            "{=CUI_Contrast_Standard}Standard (3:1)",
+            "{=CUI_Contrast_Good}Good (4.5:1, WCAG AA)",
+            "{=CUI_Contrast_Best}Best (7:1, WCAG AAA)",
         };
 
         internal static readonly string[] StatusChoices =
         {
-            "Keep red and green (vanilla)",
-            "Colour-blind safe (orange and blue)",
-            "Recolour like other text",
+            "{=CUI_Status_Vanilla}Keep red and green (vanilla)",
+            "{=CUI_Status_ColourBlind}Colour-blind safe (orange and blue)",
+            "{=CUI_Status_Recolour}Recolour like other text",
         };
 
         // The order matters: Hotkey.cs maps an index back to a key.
         internal static readonly string[] HotkeyChoices =
         {
-            "Off",
+            "{=CUI_Hotkey_Off}Off",
             "Ctrl+Shift+U",
             "F8",
             "F9",
@@ -65,13 +68,13 @@ namespace CustomisableUI
 
         // ---- General ---------------------------------------------------------------------------------------------
 
-        [SettingPropertyBool("Enable Customisable UI", Order = 0, RequireRestart = false,
-            HintText = "Master switch. Off restores the vanilla look immediately.")]
+        [SettingPropertyBool("{=CUI_Enabled}Enable Customisable UI", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_Enabled_Hint}Master switch. Off restores the vanilla look immediately.")]
         [SettingPropertyGroup(General, GroupOrder = 0)]
         public bool Enabled { get; set; } = true;
 
-        [SettingPropertyBool("Write a debug log", Order = 1, RequireRestart = false,
-            HintText = "Lists every UI brush and sprite the mod sees, and what it decided to treat it as, in " +
+        [SettingPropertyBool("{=CUI_DebugLogging}Write a debug log", Order = 1, RequireRestart = false,
+            HintText = "{=CUI_DebugLogging_Hint}Lists every UI brush and sprite the mod sees, and what it decided to treat it as, in " +
                        "Documents\\Mount and Blade II Bannerlord\\Logs\\CustomisableUI.log. Useful if something " +
                        "is being recoloured that shouldn't be.")]
         [SettingPropertyGroup(General, GroupOrder = 0)]
@@ -80,16 +83,16 @@ namespace CustomisableUI
         // Compatibility with mods that colour the UI to carry meaning, e.g. item rows tinted by quality or rarity.
         // Off by default: it also leaves a few of the game's own coloured elements (green and gold buttons, damage
         // flashes) unthemed, and most players don't need it.
-        [SettingPropertyBool("Keep colours added by other mods", Order = 2, RequireRestart = false,
-            HintText = "Compatibility with mods that colour the interface to mean something, such as item rows tinted " +
+        [SettingPropertyBool("{=CUI_KeepOtherModColours}Keep colours added by other mods", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_KeepOtherModColours_Hint}Compatibility with mods that colour the interface to mean something, such as item rows tinted " +
                        "by quality. Panels, buttons and text that are already a clearly coloured shade (not black, white, " +
                        "grey or the game's usual browns) are left alone instead of being themed. A few of the game's own " +
                        "coloured buttons and panels stay as they are too.")]
         [SettingPropertyGroup(General, GroupOrder = 0)]
         public bool KeepOtherModColours { get; set; }
 
-        [SettingPropertyDropdown("Hotkey: show vanilla look", Order = 3, RequireRestart = false,
-            HintText = "Press to switch between your theme and the game's vanilla look, from anywhere (including this " +
+        [SettingPropertyDropdown("{=CUI_ToggleHotkey}Hotkey: show vanilla look", Order = 3, RequireRestart = false,
+            HintText = "{=CUI_ToggleHotkey_Hint}Press to switch between your theme and the game's vanilla look, from anywhere (including this " +
                        "screen). Handy for comparing, and a way out if a combination makes the interface hard to read. " +
                        "Press again to bring your theme back.")]
         [SettingPropertyGroup(General, GroupOrder = 0)]
@@ -97,309 +100,309 @@ namespace CustomisableUI
 
         // ---- Panels ----------------------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Panel colour", Order = 0, RequireRestart = false,
-            HintText = "Tint for window and panel backgrounds. The tint is multiplied with the original artwork, " +
+        [SettingPropertyDropdown("{=CUI_PanelColour}Panel colour", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_PanelColour_Hint}Tint for window and panel backgrounds. The tint is multiplied with the original artwork, " +
                        "so pair darker colours with a higher brightness.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public Dropdown<string> PanelColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Panel custom colour", 1, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB, e.g. #2A3F8F.")]
+        [SettingPropertyText("{=CUI_PanelHex}Panel custom colour", 1, false,
+            "{=CUI_PanelHex_Hint}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB, e.g. #2A3F8F.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public string PanelHex { get; set; } = "#2A3F8F";
 
-        [SettingPropertyFloatingInteger("Panel colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
-            HintText = "0% keeps the vanilla colour, 100% applies the full tint.")]
+        [SettingPropertyFloatingInteger("{=CUI_PanelStrength}Panel colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_Hint_Strength}0% keeps the vanilla colour, 100% applies the full tint.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public float PanelStrength { get; set; } = 1f;
 
-        [SettingPropertyFloatingInteger("Panel brightness", 0.3f, 2.5f, "0.00", Order = 3, RequireRestart = false,
-            HintText = "1.00 is vanilla. Raise it if a dark tint makes panels too murky.")]
+        [SettingPropertyFloatingInteger("{=CUI_PanelBrightness}Panel brightness", 0.3f, 2.5f, "0.00", Order = 3, RequireRestart = false,
+            HintText = "{=CUI_PanelBrightness_Hint}1.00 is vanilla. Raise it if a dark tint makes panels too murky.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public float PanelBrightness { get; set; } = 1f;
 
-        [SettingPropertyFloatingInteger("Panel opacity", 0.1f, 1f, "0%", Order = 4, RequireRestart = false,
-            HintText = "Lower values let the game world show through panels. Keep it high enough to read text.")]
+        [SettingPropertyFloatingInteger("{=CUI_PanelOpacity}Panel opacity", 0.1f, 1f, "0%", Order = 4, RequireRestart = false,
+            HintText = "{=CUI_PanelOpacity_Hint}Lower values let the game world show through panels. Keep it high enough to read text.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public float PanelOpacity { get; set; } = 1f;
 
         // ---- Frames ----------------------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Frame colour", Order = 0, RequireRestart = false,
-            HintText = "Tint for the decorative borders around panels.")]
+        [SettingPropertyDropdown("{=CUI_FrameColour}Frame colour", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_FrameColour_Hint}Tint for the decorative borders around panels.")]
         [SettingPropertyGroup(Frames, GroupOrder = 2)]
         public Dropdown<string> FrameColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Frame custom colour", 1, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_FrameHex}Frame custom colour", 1, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Frames, GroupOrder = 2)]
         public string FrameHex { get; set; } = "#E0B040";
 
-        [SettingPropertyFloatingInteger("Frame colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
-            HintText = "0% keeps the vanilla colour, 100% applies the full tint.")]
+        [SettingPropertyFloatingInteger("{=CUI_FrameStrength}Frame colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_Hint_Strength}0% keeps the vanilla colour, 100% applies the full tint.")]
         [SettingPropertyGroup(Frames, GroupOrder = 2)]
         public float FrameStrength { get; set; } = 1f;
 
-        [SettingPropertyFloatingInteger("Frame brightness", 0.3f, 2.5f, "0.00", Order = 3, RequireRestart = false,
-            HintText = "1.00 is vanilla.")]
+        [SettingPropertyFloatingInteger("{=CUI_FrameBrightness}Frame brightness", 0.3f, 2.5f, "0.00", Order = 3, RequireRestart = false,
+            HintText = "{=CUI_Hint_BrightnessVanilla}1.00 is vanilla.")]
         [SettingPropertyGroup(Frames, GroupOrder = 2)]
         public float FrameBrightness { get; set; } = 1f;
 
         // ---- Buttons ---------------------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Button colour", Order = 0, RequireRestart = false,
-            HintText = "Tint for button artwork (hover and pressed states keep their relative brightness).")]
+        [SettingPropertyDropdown("{=CUI_ButtonColour}Button colour", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_ButtonColour_Hint}Tint for button artwork (hover and pressed states keep their relative brightness).")]
         [SettingPropertyGroup(Buttons, GroupOrder = 3)]
         public Dropdown<string> ButtonColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Button custom colour", 1, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_ButtonHex}Button custom colour", 1, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Buttons, GroupOrder = 3)]
         public string ButtonHex { get; set; } = "#3A64D8";
 
-        [SettingPropertyFloatingInteger("Button colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
-            HintText = "0% keeps the vanilla colour, 100% applies the full tint.")]
+        [SettingPropertyFloatingInteger("{=CUI_ButtonStrength}Button colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_Hint_Strength}0% keeps the vanilla colour, 100% applies the full tint.")]
         [SettingPropertyGroup(Buttons, GroupOrder = 3)]
         public float ButtonStrength { get; set; } = 1f;
 
-        [SettingPropertyFloatingInteger("Button brightness", 0.3f, 2.5f, "0.00", Order = 3, RequireRestart = false,
-            HintText = "1.00 is vanilla.")]
+        [SettingPropertyFloatingInteger("{=CUI_ButtonBrightness}Button brightness", 0.3f, 2.5f, "0.00", Order = 3, RequireRestart = false,
+            HintText = "{=CUI_Hint_BrightnessVanilla}1.00 is vanilla.")]
         [SettingPropertyGroup(Buttons, GroupOrder = 3)]
         public float ButtonBrightness { get; set; } = 1f;
 
         // ---- Text ------------------------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Text colour", Order = 0, RequireRestart = false,
-            HintText = "Replaces the colour of all text. 'Auto' picks light or dark text to suit your panel and button colours.")]
+        [SettingPropertyDropdown("{=CUI_TextColour}Text colour", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_TextColour_Hint}Replaces the colour of all text. 'Auto' picks light or dark text to suit your panel and button colours.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public Dropdown<string> TextColour { get; set; } = new Dropdown<string>(Swatches.TextNames(), 0);
 
-        [SettingPropertyText("Text custom colour", 1, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_TextHex}Text custom colour", 1, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public string TextHex { get; set; } = "#F5EBD3";
 
-        [SettingPropertyFloatingInteger("Text colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
-            HintText = "0% keeps the vanilla colour, 100% replaces it completely.")]
+        [SettingPropertyFloatingInteger("{=CUI_TextStrength}Text colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_TextStrength_Hint}0% keeps the vanilla colour, 100% replaces it completely.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public float TextStrength { get; set; } = 1f;
 
-        [SettingPropertyBool("Keep text readable", Order = 3, RequireRestart = false,
-            HintText = "If your text colour would be hard to read on your panel and button colours (pale text on a light " +
+        [SettingPropertyBool("{=CUI_KeepTextReadable}Keep text readable", Order = 3, RequireRestart = false,
+            HintText = "{=CUI_KeepTextReadable_Hint}If your text colour would be hard to read on your panel and button colours (pale text on a light " +
                        "panel, dark text on a dark one), light or dark text is used instead. Also corrects vanilla text " +
                        "when a theme makes it hard to read.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public bool KeepTextReadable { get; set; } = true;
 
-        [SettingPropertyDropdown("Minimum text contrast", Order = 4, RequireRestart = false,
-            HintText = "How much contrast 'Keep text readable' insists on, as a WCAG contrast ratio. 4.5:1 is the " +
+        [SettingPropertyDropdown("{=CUI_ContrastTarget}Minimum text contrast", Order = 4, RequireRestart = false,
+            HintText = "{=CUI_ContrastTarget_Hint}How much contrast 'Keep text readable' insists on, as a WCAG contrast ratio. 4.5:1 is the " +
                        "accessibility standard (AA) for normal text; 7:1 (AAA) is the enhanced level for low vision.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public Dropdown<string> ContrastTarget { get; set; } = new Dropdown<string>(ContrastChoices, 1);
 
         // ---- Good, bad and warning -------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Red and green status palette", Order = 0, RequireRestart = false,
-            HintText = "Losses, gains and warnings are drawn in red and green, which people with red-green colour " +
+        [SettingPropertyDropdown("{=CUI_StatusColours}Red and green status palette", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_StatusColours_Hint}Losses, gains and warnings are drawn in red and green, which people with red-green colour " +
                        "blindness often can't tell apart. 'Colour-blind safe' swaps them for orange and blue. Any " +
                        "colour picked below takes priority over this.")]
         [SettingPropertyGroup(Statuses, GroupOrder = 8)]
         public Dropdown<string> StatusColours { get; set; } = new Dropdown<string>(StatusChoices, 0);
 
-        [SettingPropertyDropdown("Good colour", Order = 1, RequireRestart = false,
-            HintText = "Gains, bonuses and positive values: green text, and the game's 'positive' and 'bonus' text and " +
+        [SettingPropertyDropdown("{=CUI_GoodColour}Good colour", Order = 1, RequireRestart = false,
+            HintText = "{=CUI_GoodColour_Hint}Gains, bonuses and positive values: green text, and the game's 'positive' and 'bonus' text and " +
                        "slider fills. 'Vanilla' leaves them alone.")]
         [SettingPropertyGroup(Statuses, GroupOrder = 8)]
         public Dropdown<string> GoodColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Good custom colour", 2, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_GoodHex}Good custom colour", 2, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Statuses, GroupOrder = 8)]
         public string GoodHex { get; set; } = "#4EC24E";
 
-        [SettingPropertyDropdown("Bad colour", Order = 3, RequireRestart = false,
-            HintText = "Losses, penalties and negative values: red text, and the game's 'negative' and 'penalty' text " +
+        [SettingPropertyDropdown("{=CUI_BadColour}Bad colour", Order = 3, RequireRestart = false,
+            HintText = "{=CUI_BadColour_Hint}Losses, penalties and negative values: red text, and the game's 'negative' and 'penalty' text " +
                        "and slider fills.")]
         [SettingPropertyGroup(Statuses, GroupOrder = 8)]
         public Dropdown<string> BadColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Bad custom colour", 4, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_BadHex}Bad custom colour", 4, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Statuses, GroupOrder = 8)]
         public string BadHex { get; set; } = "#E04545";
 
-        [SettingPropertyDropdown("Warning colour", Order = 5, RequireRestart = false,
-            HintText = "Text the game marks as a warning.")]
+        [SettingPropertyDropdown("{=CUI_WarningColour}Warning colour", Order = 5, RequireRestart = false,
+            HintText = "{=CUI_WarningColour_Hint}Text the game marks as a warning.")]
         [SettingPropertyGroup(Statuses, GroupOrder = 8)]
         public Dropdown<string> WarningColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Warning custom colour", 6, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_WarningHex}Warning custom colour", 6, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Statuses, GroupOrder = 8)]
         public string WarningHex { get; set; } = "#E0A030";
 
         // ---- Crosshair -------------------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Crosshair colour", Order = 0, RequireRestart = false,
-            HintText = "Colour of the crosshair lines in battle. 'Vanilla' keeps the game's own.")]
+        [SettingPropertyDropdown("{=CUI_CrosshairColour}Crosshair colour", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_CrosshairColour_Hint}Colour of the crosshair lines in battle. 'Vanilla' keeps the game's own.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public Dropdown<string> CrosshairColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Crosshair custom colour", 1, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_CrosshairHex}Crosshair custom colour", 1, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public string CrosshairHex { get; set; } = "#FFFFFF";
 
-        [SettingPropertyDropdown("Crosshair colour when blocked", Order = 2, RequireRestart = false,
-            HintText = "The game turns the crosshair red when the target is invalid. This is the colour used instead.")]
+        [SettingPropertyDropdown("{=CUI_BlockedColour}Crosshair colour when blocked", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_BlockedColour_Hint}The game turns the crosshair red when the target is invalid. This is the colour used instead.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public Dropdown<string> BlockedColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Blocked custom colour", 3, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_BlockedHex}Blocked custom colour", 3, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public string BlockedHex { get; set; } = "#FF4444";
 
-        [SettingPropertyDropdown("Hit marker colour", Order = 4, RequireRestart = false,
-            HintText = "The marker that flashes when you hit something. Vanilla is white.")]
+        [SettingPropertyDropdown("{=CUI_HitMarkerColour}Hit marker colour", Order = 4, RequireRestart = false,
+            HintText = "{=CUI_HitMarkerColour_Hint}The marker that flashes when you hit something. Vanilla is white.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public Dropdown<string> HitMarkerColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Hit marker custom colour", 5, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_HitMarkerHex}Hit marker custom colour", 5, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public string HitMarkerHex { get; set; } = "#FFFFFF";
 
-        [SettingPropertyDropdown("Kill and headshot marker colour", Order = 6, RequireRestart = false,
-            HintText = "The marker that flashes on a kill, and the headshot marker. Vanilla is red.")]
+        [SettingPropertyDropdown("{=CUI_KillMarkerColour}Kill and headshot marker colour", Order = 6, RequireRestart = false,
+            HintText = "{=CUI_KillMarkerColour_Hint}The marker that flashes on a kill, and the headshot marker. Vanilla is red.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public Dropdown<string> KillMarkerColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Kill marker custom colour", 7, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_KillMarkerHex}Kill marker custom colour", 7, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public string KillMarkerHex { get; set; } = "#FF3333";
 
-        [SettingPropertyFloatingInteger("Crosshair opacity", 0.2f, 1f, "0%", Order = 8, RequireRestart = false,
-            HintText = "Lower values make the crosshair and its markers more transparent. 100% is vanilla.")]
+        [SettingPropertyFloatingInteger("{=CUI_CrosshairOpacity}Crosshair opacity", 0.2f, 1f, "0%", Order = 8, RequireRestart = false,
+            HintText = "{=CUI_CrosshairOpacity_Hint}Lower values make the crosshair and its markers more transparent. 100% is vanilla.")]
         [SettingPropertyGroup(CrosshairGroup, GroupOrder = 9)]
         public float CrosshairOpacity { get; set; } = 1f;
 
-        [SettingPropertyFloatingInteger("Text brightness", 0.5f, 1.8f, "0.00", Order = 6, RequireRestart = false,
-            HintText = "1.00 is vanilla.")]
+        [SettingPropertyFloatingInteger("{=CUI_TextBrightness}Text brightness", 0.5f, 1.8f, "0.00", Order = 6, RequireRestart = false,
+            HintText = "{=CUI_Hint_BrightnessVanilla}1.00 is vanilla.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public float TextBrightness { get; set; } = 1f;
 
-        [SettingPropertyDropdown("Text outline colour", Order = 7, RequireRestart = false,
-            HintText = "Colour of the outline added by 'Text outline thickness'.")]
+        [SettingPropertyDropdown("{=CUI_OutlineColour}Text outline colour", Order = 7, RequireRestart = false,
+            HintText = "{=CUI_OutlineColour_Hint}Colour of the outline added by 'Text outline thickness'.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public Dropdown<string> OutlineColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), Swatches.IndexOf("Black"));
 
-        [SettingPropertyText("Text outline custom colour", 8, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_OutlineHex}Text outline custom colour", 8, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public string OutlineHex { get; set; } = "#000000";
 
-        [SettingPropertyFloatingInteger("Text outline thickness", 0f, 1f, "0%", Order = 9, RequireRestart = false,
-            HintText = "Adds an outline to text to keep it readable on busy or recoloured backgrounds. " +
+        [SettingPropertyFloatingInteger("{=CUI_OutlineThickness}Text outline thickness", 0f, 1f, "0%", Order = 9, RequireRestart = false,
+            HintText = "{=CUI_OutlineThickness_Hint}Adds an outline to text to keep it readable on busy or recoloured backgrounds. " +
                        "0% leaves each piece of text with its vanilla outline.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public float OutlineThickness { get; set; }
 
-        [SettingPropertyFloatingInteger("Text shadow", 0f, 1f, "0%", Order = 10, RequireRestart = false,
-            HintText = "Adds a soft dark halo behind text, which helps names stay readable over a busy map. " +
+        [SettingPropertyFloatingInteger("{=CUI_ShadowStrength}Text shadow", 0f, 1f, "0%", Order = 10, RequireRestart = false,
+            HintText = "{=CUI_ShadowStrength_Hint}Adds a soft dark halo behind text, which helps names stay readable over a busy map. " +
                        "0% leaves each piece of text with its vanilla shadow.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public float ShadowStrength { get; set; }
 
-        [SettingPropertyDropdown("Text shadow colour", Order = 11, RequireRestart = false,
-            HintText = "Colour of the shadow added by 'Text shadow'.")]
+        [SettingPropertyDropdown("{=CUI_ShadowColour}Text shadow colour", Order = 11, RequireRestart = false,
+            HintText = "{=CUI_ShadowColour_Hint}Colour of the shadow added by 'Text shadow'.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public Dropdown<string> ShadowColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), Swatches.IndexOf("Black"));
 
-        [SettingPropertyText("Text shadow custom colour", 12, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_ShadowHex}Text shadow custom colour", 12, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(TextGroup, GroupOrder = 4)]
         public string ShadowHex { get; set; } = "#000000";
 
         // ---- Fonts -----------------------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Main font", Order = 0, RequireRestart = false,
-            HintText = "Replaces the font used for most interface text (vanilla: Fira Sans Extra Condensed). " +
+        [SettingPropertyDropdown("{=CUI_MainFont}Main font", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_MainFont_Hint}Replaces the font used for most interface text (vanilla: Fira Sans Extra Condensed). " +
                        "Only applies to Latin-alphabet languages.")]
         [SettingPropertyGroup(Fonts, GroupOrder = 5)]
         public Dropdown<string> MainFont { get; set; } = new Dropdown<string>(FontChoices, 0);
 
-        [SettingPropertyDropdown("Decorative font", Order = 1, RequireRestart = false,
-            HintText = "Replaces the decorative serif font used for titles and many labels (vanilla: Galahad). " +
+        [SettingPropertyDropdown("{=CUI_DecorativeFont}Decorative font", Order = 1, RequireRestart = false,
+            HintText = "{=CUI_DecorativeFont_Hint}Replaces the decorative serif font used for titles and many labels (vanilla: Galahad). " +
                        "Only applies to Latin-alphabet languages.")]
         [SettingPropertyGroup(Fonts, GroupOrder = 5)]
         public Dropdown<string> DecorativeFont { get; set; } = new Dropdown<string>(FontChoices, 0);
 
-        [SettingPropertyFloatingInteger("Text size", 0.75f, 1.35f, "0%", Order = 2, RequireRestart = false,
-            HintText = "Scales labels and most single-line text. Long passages (conversations, encyclopedia) " +
+        [SettingPropertyFloatingInteger("{=CUI_TextScale}Text size", 0.75f, 1.35f, "0%", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_TextScale_Hint}Scales labels and most single-line text. Long passages (conversations, encyclopedia) " +
                        "keep their vanilla size.")]
         [SettingPropertyGroup(Fonts, GroupOrder = 5)]
         public float TextScale { get; set; } = 1f;
 
         // ---- Colour grading --------------------------------------------------------------------------------------
 
-        [SettingPropertyInteger("Hue shift", -180, 180, "0", Order = 0, RequireRestart = false,
-            HintText = "Rotates the hue of panels, frames and buttons, in degrees. Applied on top of the tints above.")]
+        [SettingPropertyInteger("{=CUI_HueShift}Hue shift", -180, 180, "0", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_HueShift_Hint}Rotates the hue of panels, frames and buttons, in degrees. Applied on top of the tints above.")]
         [SettingPropertyGroup(Grading, GroupOrder = 6)]
         public int HueShift { get; set; }
 
-        [SettingPropertyInteger("Saturation", -100, 100, "0", Order = 1, RequireRestart = false,
-            HintText = "Negative values drain colour, positive values intensify it.")]
+        [SettingPropertyInteger("{=CUI_Saturation}Saturation", -100, 100, "0", Order = 1, RequireRestart = false,
+            HintText = "{=CUI_Saturation_Hint}Negative values drain colour, positive values intensify it.")]
         [SettingPropertyGroup(Grading, GroupOrder = 6)]
         public int Saturation { get; set; }
 
-        [SettingPropertyInteger("Brightness", -100, 100, "0", Order = 2, RequireRestart = false,
-            HintText = "Negative values darken, positive values lighten.")]
+        [SettingPropertyInteger("{=CUI_Brightness}Brightness", -100, 100, "0", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_Brightness_Hint}Negative values darken, positive values lighten.")]
         [SettingPropertyGroup(Grading, GroupOrder = 6)]
         public int Brightness { get; set; }
 
-        [SettingPropertyBool("Also grade icons and artwork", Order = 3, RequireRestart = false,
-            HintText = "Off (default): only panels, frames and buttons are graded. On: every sprite is, including " +
+        [SettingPropertyBool("{=CUI_GradeEverything}Also grade icons and artwork", Order = 3, RequireRestart = false,
+            HintText = "{=CUI_GradeEverything_Hint}Off (default): only panels, frames and buttons are graded. On: every sprite is, including " +
                        "icons, banners and portraits' frames.")]
         [SettingPropertyGroup(Grading, GroupOrder = 6)]
         public bool GradeEverything { get; set; }
 
         // ---- Allies, enemies and neutrals ------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("Ally colour", Order = 0, RequireRestart = false,
-            HintText = "Colour for allies: your own faction and anyone allied with it. 'Vanilla' leaves the game's " +
+        [SettingPropertyDropdown("{=CUI_AllyColour}Ally colour", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_AllyColour_Hint}Colour for allies: your own faction and anyone allied with it. 'Vanilla' leaves the game's " +
                        "own colours alone, so pick a colour for each of ally, enemy and neutral to switch them on.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public Dropdown<string> AllyColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Ally custom colour", 1, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_AllyHex}Ally custom colour", 1, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public string AllyHex { get; set; } = "#32A852";
 
-        [SettingPropertyDropdown("Enemy colour", Order = 2, RequireRestart = false,
-            HintText = "Colour for enemies: anyone at war with your faction, including bandits.")]
+        [SettingPropertyDropdown("{=CUI_EnemyColour}Enemy colour", Order = 2, RequireRestart = false,
+            HintText = "{=CUI_EnemyColour_Hint}Colour for enemies: anyone at war with your faction, including bandits.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public Dropdown<string> EnemyColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Enemy custom colour", 3, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_EnemyHex}Enemy custom colour", 3, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public string EnemyHex { get; set; } = "#C03040";
 
-        [SettingPropertyDropdown("Neutral colour", Order = 4, RequireRestart = false,
-            HintText = "Colour for everyone who is neither an ally nor an enemy.")]
+        [SettingPropertyDropdown("{=CUI_NeutralColour}Neutral colour", Order = 4, RequireRestart = false,
+            HintText = "{=CUI_NeutralColour_Hint}Colour for everyone who is neither an ally nor an enemy.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public Dropdown<string> NeutralColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("Neutral custom colour", 5, false,
-            "Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
+        [SettingPropertyText("{=CUI_NeutralHex}Neutral custom colour", 5, false,
+            "{=CUI_Hint_CustomColour}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public string NeutralHex { get; set; } = "#E0B040";
 
-        [SettingPropertyBool("Colour settlement bars on the map", Order = 6, RequireRestart = false,
-            HintText = "The coloured bar behind each castle, town and village name on the campaign map. The game " +
+        [SettingPropertyBool("{=CUI_RelationBars}Colour settlement bars on the map", Order = 6, RequireRestart = false,
+            HintText = "{=CUI_RelationBars_Hint}The coloured bar behind each castle, town and village name on the campaign map. The game " +
                        "draws these in dark green, dark red or black.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public bool RelationBars { get; set; } = true;
@@ -408,19 +411,19 @@ namespace CustomisableUI
         // of parties on the map" means in the game's interface. Called RelationNames in the first release, where it
         // defaulted to off; renamed so that the new default (on) applies to everyone. It still changes nothing until
         // a colour is picked above.
-        [SettingPropertyBool("Colour parties and settlements on the map", Order = 7, RequireRestart = false,
-            HintText = "Draws party and settlement names and troop counts on the campaign map in their relation colour " +
+        [SettingPropertyBool("{=CUI_RelationNameplates}Colour parties and settlements on the map", Order = 7, RequireRestart = false,
+            HintText = "{=CUI_RelationNameplates_Hint}Draws party and settlement names and troop counts on the campaign map in their relation colour " +
                        "instead of their faction's colour. Your own party keeps its colour. Turn off to keep faction colours.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public bool RelationNameplates { get; set; } = true;
 
-        [SettingPropertyBool("Colour party tooltip troop counts", Order = 8, RequireRestart = false,
-            HintText = "The ally, enemy and neutral troop numbers shown when you hover over a party.")]
+        [SettingPropertyBool("{=CUI_RelationTooltips}Colour party tooltip troop counts", Order = 8, RequireRestart = false,
+            HintText = "{=CUI_RelationTooltips_Hint}The ally, enemy and neutral troop numbers shown when you hover over a party.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public bool RelationTooltips { get; set; } = true;
 
-        [SettingPropertyBool("Colour battle markers", Order = 9, RequireRestart = false,
-            HintText = "In battle: the markers over formations, siege engine markers, and friendly and enemy name text.")]
+        [SettingPropertyBool("{=CUI_RelationBattle}Colour battle markers", Order = 9, RequireRestart = false,
+            HintText = "{=CUI_RelationBattle_Hint}In battle: the markers over formations, siege engine markers, and friendly and enemy name text.")]
         [SettingPropertyGroup(Relations, GroupOrder = 7)]
         public bool RelationBattle { get; set; } = true;
 
@@ -582,9 +585,16 @@ namespace CustomisableUI
             base.OnPropertyChanged(propertyName);
         }
 
+        // The preset's name is tagged for translation like everything else: "acc-low-glare" becomes the string id
+        // CUI_Preset_acc_low_glare.
+        internal static string PresetName(string id, string name)
+        {
+            return "{=CUI_Preset_" + id.Replace('-', '_') + "}" + name;
+        }
+
         private ISettingsPreset Preset(string id, string name, Action<ModSettings> configure)
         {
-            return new MemorySettingsPreset(Id, id, name, () =>
+            return new MemorySettingsPreset(Id, id, PresetName(id, name), () =>
             {
                 var settings = new ModSettings();
                 configure(settings);

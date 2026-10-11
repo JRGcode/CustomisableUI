@@ -1,6 +1,7 @@
 using System;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace CustomisableUI
 {
@@ -9,6 +10,12 @@ namespace CustomisableUI
     // that has made the interface hard to read.
     internal static class Hotkey
     {
+        // Tagged for translation, like the settings text: see docs/TRANSLATING.md.
+        internal const string VanillaLookMessage =
+            "{=CUI_Hotkey_VanillaLook}Customisable UI: showing the vanilla look. Press the hotkey again to bring your theme back.";
+
+        internal const string ThemeBackMessage = "{=CUI_Hotkey_ThemeBack}Customisable UI: your theme is back.";
+
         public static void Tick()
         {
             try
@@ -19,9 +26,7 @@ namespace CustomisableUI
                 }
 
                 ThemeState.Suspended = !ThemeState.Suspended;
-                Announce(ThemeState.Suspended
-                    ? "Customisable UI: showing the vanilla look. Press the hotkey again to bring your theme back."
-                    : "Customisable UI: your theme is back.");
+                Announce(ThemeState.Suspended ? VanillaLookMessage : ThemeBackMessage);
             }
             catch (Exception ex)
             {
@@ -64,7 +69,7 @@ namespace CustomisableUI
         {
             try
             {
-                InformationManager.DisplayMessage(new InformationMessage(message));
+                InformationManager.DisplayMessage(new InformationMessage(new TextObject(message).ToString()));
             }
             catch
             {

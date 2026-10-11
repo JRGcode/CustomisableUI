@@ -170,12 +170,12 @@ namespace CustomisableUI.Tests
 
                 // 0.05 of slack: the surfaces are estimates.
                 Check.That(ratio + 0.05f >= snapshot.ContrastTarget,
-                    "'" + preset.Name + "' text contrast " + ratio.ToString("0.0") + ":1 meets its target " + snapshot.ContrastTarget + ":1");
+                    "'" + Translations.Plain(preset.Name) + "' text contrast " + ratio.ToString("0.0") + ":1 meets its target " + snapshot.ContrastTarget + ":1");
 
-                if (preset.Name.StartsWith("Accessible:", StringComparison.Ordinal))
+                if (Translations.Plain(preset.Name).StartsWith("Accessible:", StringComparison.Ordinal))
                 {
                     accessible++;
-                    Check.That(snapshot.ContrastTarget >= 4.5f, "'" + preset.Name + "' is held to at least WCAG AA");
+                    Check.That(snapshot.ContrastTarget >= 4.5f, "'" + Translations.Plain(preset.Name) + "' is held to at least WCAG AA");
                 }
             }
 
