@@ -278,3 +278,8 @@ What it can't check is how things look: that needs the game running.
 
 Set `<GameVersion>` in `CustomisableUI.csproj`, rebuild and run the tests: the hook checks and the checks against the
 game's own data show what changed. Any hook that fails to bind is also logged to `CustomisableUI.log`.
+
+## License
+
+[MIT](LICENSE): free to use, modify and redistribute, including in your own mods. The code was written with the help of AI
+tools, and you are welcome to change it however you like.
