@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.2.0
 
 New
 - **Translation support.** Every setting name, explanation, group title, colour name, preset and the hotkey message can now
