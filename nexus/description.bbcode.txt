@@ -1,0 +1,49 @@
+[size=5][b]Customisable UI[/b][/size]
+
+Restyle Bannerlord's interface from the Mod Configuration Menu: recolour panels, frames, buttons and text, pick fonts and text size, set colours for allies, enemies and neutrals, recolour the crosshair, and more. Changes apply live, so you can watch the settings screen change as you adjust it. Nothing changes until you choose something.
+
+[size=4][b]Features[/b][/size]
+[list]
+[*][b]Panels, frames and buttons:[/b] pick a named colour or enter any #RRGGBB code, then set strength, brightness and (for panels) opacity. Buttons include dropdowns, slider tracks and knobs, checkboxes and list entries.
+[*][b]Text:[/b] recolour all text (or let the mod pick light or dark to suit your panels), add an outline or a soft shadow, and adjust brightness.
+[*][b]Fonts and size:[/b] choose the main and decorative fonts from the game's built-in typefaces, and scale text from 75% to 135%.
+[*][b]Colour grading:[/b] hue shift, saturation and brightness across the interface.
+[*][b]Ally, enemy and neutral colours:[/b] choose a colour for each, applied (with a switch per item) to settlement bars and party names and troop counts on the campaign map, party tooltips, and battle markers.
+[*][b]Good, bad and warning colours:[/b] one palette for gains, losses and warnings, including a colour-blind-safe option.
+[*][b]Crosshair:[/b] colour of the crosshair, its blocked state, the hit marker and the kill/headshot marker, plus opacity.
+[*][b]Presets:[/b] one-click themes at the top of the page that set everything together. 15 colour pairs: Black and Gold, Purple and Gold, Red and White, Black and Red, Black and White, Navy and Silver, Blue and Gold, Green and Gold, Green and White, Burgundy and Cream, Teal and Cream, Orange and Black, Rose and Cream, Slate and Sky Blue, Parchment and Ink. Fine-tune any of them afterwards.
+[*][b]Accessibility:[/b] seven "Accessible: ..." presets (High Contrast dark and light, Yellow on Black for low vision, Large Text, Colour-blind Safe, Easy Reading, Low Glare). A "Minimum text contrast" setting holds any colour choice to the WCAG 3:1, 4.5:1 or 7:1 standard, and red/green status text can be swapped for colour-blind-safe orange and blue.
+[*][b]Hotkey:[/b] Ctrl+Shift+U (or F8, F9, F10) switches between your theme and the vanilla look from anywhere, including the settings screen, so a combination that is hard to read is never a trap.
+[*][b]Compatibility:[/b] an optional "Keep colours added by other mods" setting leaves anything already in a clearly coloured shade alone, so mods that tint item rows by quality or rarity keep their colours.
+[*][b]Safe:[/b] nothing is saved into your campaign, so it can be added or removed at any time. The pause and autosave screen dimming keeps its vanilla look. Turn everything off with one switch.
+[/list]
+
+[size=4][b]Good to know[/b][/size]
+[list]
+[*]Colours are tints applied to the game's existing artwork, so dark tints give dark results. Use the brightness sliders to compensate.
+[*]Icons, banners, bars and scrollbars are deliberately left alone, so nothing changes meaning.
+[*]If something is recoloured that shouldn't be, add a rule to [i]UiRoles.txt[/i] in the mod folder. Turn on "Write a debug log" to see the names the mod is working from.
+[*]Fonts are limited to the game's own typefaces; long passages (conversations, encyclopedia) keep their vanilla text size.
+[*]The 3D party models and banners on the map, minimaps and the outlines around characters are drawn by the engine, not the interface, so they can't be recoloured.
+[/list]
+
+[size=4][b]Requirements[/b][/size]
+[list]
+[*][url=https://www.nexusmods.com/mountandblade2bannerlord/mods/2006]Harmony[/url]
+[*][url=https://www.nexusmods.com/mountandblade2bannerlord/mods/612]Mod Configuration Menu v5[/url] (and its own requirements, ButterLib and UIExtenderEx)
+[*]Mount & Blade II: Bannerlord v1.4.8
+[/list]
+
+[size=4][b]Installation[/b][/size]
+[list]
+[*][b]Vortex:[/b] click "Mod Manager Download".
+[*][b]Manual:[/b] extract the zip into [i]Mount & Blade II Bannerlord\Modules\[/i], so you end up with [i]Modules\CustomisableUI\SubModule.xml[/i].
+[*]Enable [b]Harmony[/b], [b]ButterLib[/b], [b]UIExtenderEx[/b], [b]Mod Configuration Menu v5[/b] and [b]Customisable UI[/b] in the launcher, in that order.
+[*]In game: Options, Mod Options, Customisable UI.
+[/list]
+
+[size=4][b]Compatibility[/b][/size]
+[list]
+[*]Steam, GOG, Epic and Xbox/Game Pass builds are all included.
+[*]Mods that restyle the same UI elements may combine in unexpected ways; disable one of them if the result looks wrong.
+[/list]

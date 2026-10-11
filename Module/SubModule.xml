@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The version tokens below are filled in at build time from <Version> and <GameVersion> in CustomisableUI.csproj. -->
+<Module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd">
+  <Id value="CustomisableUI" />
+  <Name value="Customisable UI" />
+  <Version value="$version$" />
+  <DefaultModule value="false" />
+  <ModuleCategory value="Singleplayer" />
+  <ModuleType value="Community" />
+  <!-- After the first Nexus upload, set Url to the mod page and UpdateInfo to "NexusMods:<mod id>"
+       so BUTR's launcher can tell players when an update is available. -->
+  <Url value="" />
+  <UpdateInfo value="" />
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.2" />
+    <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v2.9.0" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v2.8.0" />
+    <DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.9.0" />
+    <DependedModule Id="Native" DependentVersion="$gameversion$" />
+    <DependedModule Id="SandBoxCore" DependentVersion="$gameversion$" />
+    <DependedModule Id="Sandbox" DependentVersion="$gameversion$" />
+  </DependedModules>
+  <!-- Load-order metadata read by BUTR's launcher (BLSE) and Vortex. -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Native" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Sandbox" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="StoryMode" order="LoadBeforeThis" optional="true" />
+    <DependedModuleMetadata id="NavalDLC" order="LoadBeforeThis" optional="true" />
+  </DependedModuleMetadatas>
+  <SubModules>
+    <SubModule>
+      <Name value="CustomisableUI" />
+      <DLLName value="CustomisableUI.dll" />
+      <SubModuleClassType value="CustomisableUI.SubModule" />
+      <Tags />
+    </SubModule>
+  </SubModules>
+</Module>

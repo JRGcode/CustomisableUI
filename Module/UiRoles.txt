@@ -1,0 +1,18 @@
+# Customisable UI - element role overrides
+#
+# Customisable UI decides what counts as a panel, frame or button from the names of the UI brushes and sprites the game
+# draws. If something is being recoloured that shouldn't be (or isn't, and should be), add a rule here. Rules are
+# checked top to bottom, the first match wins, and they run before the built-in guesses. Matching is a
+# case-insensitive "contains" on the name.
+#
+#     brush:<part of a brush name>  = panel | frame | button | other
+#     sprite:<part of a sprite name> = panel | frame | button | other
+#
+# "other" means "leave this alone". Turn on "Write a debug log" in the mod's settings to get a list of every brush and
+# sprite name the mod sees, in Documents\Mount and Blade II Bannerlord\Logs\CustomisableUI.log.
+#
+# Examples (remove the leading # to use them):
+#
+#     brush:Inventory.ItemTuple = panel
+#     sprite:slick_frame = frame
+#     brush:HealthBar = other
