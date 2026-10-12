@@ -4,3 +4,7 @@ artifacts/
 .vs/
 .idea/
 *.user
+
+# Players' own pictures for the Backgrounds folders stay on their machine; only the READMEs are part of the repository.
+Module/Backgrounds/*/*
+!Module/Backgrounds/*/README.txt

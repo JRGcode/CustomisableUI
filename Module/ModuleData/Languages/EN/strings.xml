@@ -9,6 +9,13 @@
     <tag language="English" />
   </tags>
   <strings>
+    <string id="CUI_CustomBackgrounds" text="Use custom backgrounds" />
+    <string id="CUI_CustomBackgrounds_Hint" text="Shows your own pictures instead of the game's. Put PNG or JPG files in the mod's Backgrounds folder: MainMenu for the main menu, Loading for the loading screens (and the few menus that reuse them). New files are picked up the next time the screen appears. Nothing changes while the folders are empty. Off, or the hotkey, brings back the game's own." />
+    <string id="CUI_Group_Backgrounds" text="11. Backgrounds" />
+    <string id="CUI_LoadingScreens" text="Loading screens" />
+    <string id="CUI_LoadingScreens_Hint" text="Which pictures the loading screens show, when there are pictures in the Backgrounds Loading folder. Mixed shows one of yours on about half the loading screens and one of the game's on the rest. Needs Use custom backgrounds to be on." />
+    <string id="CUI_BackgroundFit" text="Picture fit" />
+    <string id="CUI_BackgroundFit_Hint" text="How a picture that is a different shape from the screen is fitted. Fill keeps it undistorted and crops the edges; Stretch shows all of it, squashed to the screen's shape." />
     <string id="CUI_Enabled" text="Enable Customisable UI" />
     <string id="CUI_Enabled_Hint" text="Master switch. Off restores the vanilla look immediately." />
     <string id="CUI_Group_General" text="1. General" />
@@ -125,6 +132,11 @@
     <string id="CUI_RelationTooltips_Hint" text="The ally, enemy and neutral troop numbers shown when you hover over a party." />
     <string id="CUI_RelationBattle" text="Colour battle markers" />
     <string id="CUI_RelationBattle_Hint" text="In battle: the markers over formations, siege engine markers, and friendly and enemy name text." />
+    <string id="CUI_BackgroundFit_Fill" text="Fill the screen (crops the edges)" />
+    <string id="CUI_BackgroundFit_Stretch" text="Stretch to fit (may distort)" />
+    <string id="CUI_LoadingScreens_Mine" text="My pictures only" />
+    <string id="CUI_LoadingScreens_Both" text="My pictures and the game's, mixed" />
+    <string id="CUI_LoadingScreens_Game" text="The game's pictures only (none of mine)" />
     <string id="CUI_Vanilla" text="Vanilla (no change)" />
     <string id="CUI_Font_Light" text="Fira Sans Light" />
     <string id="CUI_Font_Regular" text="Fira Sans Regular" />

@@ -124,7 +124,7 @@ namespace CustomisableUI.Tests
                 "Enabled", "KeepOtherModColours", "ToggleHotkey", "PanelColour", "FrameColour", "ButtonColour", "TextColour",
                 "ContrastTarget", "ShadowStrength", "MainFont", "HueShift", "AllyColour", "RelationNameplates",
                 "GoodColour", "BadColour", "WarningColour", "StatusColours", "CrosshairColour", "BlockedColour",
-                "HitMarkerColour", "KillMarkerColour", "CrosshairOpacity",
+                "HitMarkerColour", "KillMarkerColour", "CrosshairOpacity", "CustomBackgrounds", "BackgroundFit",
             })
             {
                 Check.That(ids.Contains(expected), "option '" + expected + "' is on the screen");
@@ -687,7 +687,14 @@ namespace CustomisableUI.Tests
                     }
                 }
 
-                Check.Equal(types.Length, harmony.GetPatchedMethods().Count(), "every hook patched its own method");
+                // Two hooks can patch the same method (the custom backgrounds feature has its own on Widget.OnRender, beside
+                // the shared one), so what is counted is the distinct methods the hooks name.
+                int targets = types
+                    .SelectMany(t => HarmonyMethodExtensions.GetFromType(t))
+                    .Select(m => m.declaringType + "." + m.methodName + "/" + m.methodType)
+                    .Distinct()
+                    .Count();
+                Check.Equal(targets, harmony.GetPatchedMethods().Count(), "every hook patched the method it names");
             }
             finally
             {

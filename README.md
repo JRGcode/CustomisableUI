@@ -44,6 +44,7 @@ The preset list: the accessibility presets come first, then 15 colour pairs.
   campaign map, party tooltips and battle markers.
 - **Good, bad and warning colours.** One palette for gains, losses and warnings, including a colour-blind-safe option.
 - **Crosshair.** Colour of the crosshair, its blocked state, the hit marker and the kill/headshot marker, plus opacity.
+- **Custom backgrounds.** Drop your own pictures into a folder in the mod and they appear behind the main menu and on the loading screens.
 - **Presets.** One-click themes: 15 colour pairs (Black and Gold, Purple and Gold, Red and White...) and 7 accessibility
   presets (high contrast, low vision, large text, colour-blind safe, easy reading, low glare).
 - **Accessibility.** WCAG contrast targets (3:1, 4.5:1, 7:1), colour-blind-safe status colours, large-text and
@@ -66,7 +67,7 @@ a quick way to compare. Press it again to bring your theme back. The settings th
 
 ## The settings screen
 
-62 options in 10 groups.
+65 options in 11 groups.
 
 | Group | Options |
 | --- | --- |
@@ -80,9 +81,39 @@ a quick way to compare. Press it again to bring your theme back. The settings th
 | 8. Allies, enemies & neutrals | An ally, enemy and neutral colour; which parts of the UI use them. |
 | 9. Good, bad & warning | The colour-blind-safe palette; a good, bad and warning colour. |
 | 10. Crosshair | Crosshair, blocked, hit marker and kill/headshot marker colours; opacity. |
+| 11. Backgrounds | Use custom backgrounds; what the loading screens show (my pictures, mixed, or the game's); how a picture is fitted to the screen. |
 
 Every colour option is a dropdown of 27 named swatches (including the Okabe-Ito colour-blind-safe set) plus *Custom*, which
 reads the hex code in the box beneath it. A half-typed code is ignored, so the previous colour stays until it is valid.
+
+## Custom backgrounds
+
+Put your own pictures in a folder inside the mod and they are used in place of the game's:
+
+| Folder (inside `Modules\CustomisableUI\Backgrounds`) | Used for |
+| --- | --- |
+| `MainMenu` | Behind the main menu. One is chosen at random each time the menu appears. |
+| `Loading` | The loading screens, and the few menus that reuse the game's loading pictures. One is chosen at random for each loading screen. |
+
+Use PNG or JPG files with any name, 1920x1080 or larger (but no bigger than 4K). New files are picked up shortly after
+you add them, so there is nothing to restart. A picture that isn't the shape of the screen is cropped to fit, or
+squashed to fit if you set *Picture fit* to *Stretch*. Each folder has a README.txt with the details, including how to
+switch it off. The mod's folder may be replaced when the mod is updated, so keep a copy of your pictures elsewhere.
+
+**Loading screens** have a setting of their own, *Loading screens*, in the Backgrounds group:
+
+| Setting | What the loading screens show |
+| --- | --- |
+| My pictures only | One of yours on every loading screen (the default). |
+| My pictures and the game's, mixed | One of yours on about half the loading screens, and one of the game's on the rest. |
+| The game's pictures only | None of yours: the game's own loading screens. |
+
+This works with the War Sails expansion too, which has its own set of loading pictures.
+
+How it works: the main menu's background is a video the engine plays behind the interface, which the mod can't recolour or
+replace, so a picture is placed over it and the video's music carries on underneath. The loading screens are ordinary
+interface sprites, which the mod swaps for your pictures as they are drawn. The code for all of this is in
+[`src/CustomisableUI/Backgrounds`](src/CustomisableUI/Backgrounds/README.md), kept apart from the rest of the mod.
 
 ## Presets
 
@@ -247,11 +278,15 @@ src/CustomisableUI/           C# project (the DLL)
   Hotkey.cs                   The vanilla-look toggle
   CrashDiagnostics.cs         Full call stack for a failing text lookup or an unhandled exception
   Log.cs                      Logging
+  ModulePaths.cs              Where the module folder is (UiRoles.txt, Backgrounds\)
+  Backgrounds/                The custom backgrounds and loading screen replacer, self-contained (see its README.md)
 tests/CustomisableUI.Tests/   Checks that run against the real game assemblies (see Testing)
   Translations.cs             Finds every translatable string; checks them and the English template
+  BackgroundChecks.cs         The custom-background fitting, name matching and folder scanning
 Module/                       Non-code module files, copied as-is into the module folder
   SubModule.xml               Module manifest ($version$ and $gameversion$ are filled in at build time)
   UiRoles.txt                 User-editable role overrides
+  Backgrounds/                Where players put their own pictures (MainMenu, Loading), each with a README.txt
   ModuleData/Languages/       One folder per language. EN is the generated template; translations are added beside it
 tools/check-translations.ps1  Checks translation files against the English template (needs only PowerShell)
 nexus/description.bbcode.txt  Text for the Nexus mod page

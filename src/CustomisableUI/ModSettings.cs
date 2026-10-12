@@ -10,7 +10,8 @@ namespace CustomisableUI
 {
     // The MCM screen. Every value is read back through ThemeState, which re-resolves this object ten times a second,
     // so changes show up live, even on the settings screen itself.
-    public sealed class ModSettings : AttributeGlobalSettings<ModSettings>
+    // [Backgrounds] A partial class: the custom backgrounds feature's options are in Backgrounds\ModSettings.Backgrounds.cs.
+    public sealed partial class ModSettings : AttributeGlobalSettings<ModSettings>
     {
         // Every player-visible string in this file starts with a "{=CUI_...}" tag: the game looks the tag up in the
         // player's language files (Module\ModuleData\Languages) and shows the English text after it when there is no

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CustomisableUI.Backgrounds;
 using HarmonyLib;
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.BaseTypes;
@@ -13,6 +14,7 @@ namespace CustomisableUI
     //   * BrushRenderer / Style .CreateTextMaterial   recolours text (plain and rich text respectively).
     //   * FontFactory.GetMappedFontForLocalization    swaps fonts.
     //   * Text.FontSize setter        scales text.
+    // The custom backgrounds feature has its own hooks, in Backgrounds\BackgroundPatches.cs.
     // Each hook is wrapped so that a failure is logged once and can never take the UI down with it.
 
     internal static class PatchGuard
@@ -124,20 +126,29 @@ namespace CustomisableUI
     [HarmonyPatch(typeof(TwoDimensionDrawContext), nameof(TwoDimensionDrawContext.DrawSprite))]
     internal static class DrawSpritePatch
     {
-        private static void Prefix(Sprite sprite, SimpleMaterial material, ref Rectangle2D rectangle)
+        // Returns false only to skip the draw, which is how a custom background goes away when it is switched off.
+        private static bool Prefix(ref Sprite sprite, SimpleMaterial material, ref Rectangle2D rectangle)
         {
             bool viaBrush = UiContext.InBrushRender;
             if (!(viaBrush || UiContext.InWidgetRender) || PatchGuard.Tripped || sprite == null || material == null)
             {
-                return;
+                return true;
             }
 
             try
             {
                 ThemeSnapshot theme = ThemeState.Current;
+
+                // [Backgrounds] The player's own pictures, and the game's loading pictures they stand in for, are
+                // handled by the custom backgrounds feature (see Backgrounds\README.md) and are never themed.
+                if (BackgroundDraw.Concerns(sprite))
+                {
+                    return BackgroundDraw.Prepare(theme, ref sprite, ref rectangle);
+                }
+
                 if (!theme.Enabled)
                 {
-                    return;
+                    return true;
                 }
 
                 string brush = viaBrush ? UiContext.CurrentBrush : null;
@@ -145,13 +156,13 @@ namespace CustomisableUI
                 // Sprites the game colours by relation (settlement bars, battle markers) have their own colours.
                 if (viaBrush && RelationStyler.TryApplyToSprite(theme, material, brush))
                 {
-                    return;
+                    return true;
                 }
 
                 // So do the crosshair and the slider fills that show a gain or a loss.
                 if (viaBrush && SemanticStyler.TryApplyToSprite(theme, material, brush, UiContext.CurrentStyle))
                 {
-                    return;
+                    return true;
                 }
 
                 UiRole role = RoleClassifier.Classify(brush, sprite.Name);
@@ -209,6 +220,8 @@ namespace CustomisableUI
             {
                 PatchGuard.Report("DrawSprite", ex);
             }
+
+            return true;
         }
     }
 

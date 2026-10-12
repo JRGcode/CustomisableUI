@@ -71,6 +71,7 @@ namespace CustomisableUI.Tests
             Tests.ScreenDimmingChecks();
             Tests.GameDataChecks();
             Tests.HooksChecks();
+            BackgroundChecks.Run();
             Translations.Checks();
 
             return Check.Report();

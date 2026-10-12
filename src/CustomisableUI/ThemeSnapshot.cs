@@ -1,4 +1,5 @@
 using System;
+using CustomisableUI.Backgrounds;
 using TaleWorlds.Library;
 
 namespace CustomisableUI
@@ -170,6 +171,9 @@ namespace CustomisableUI
 
         public bool HasGrading => Hue != 0f || Saturation != 0f || Value != 0f;
 
+        // [Backgrounds] The custom backgrounds feature's settings (see the Backgrounds folder).
+        public BackgroundStyle Background;
+
         public RoleStyle StyleFor(UiRole role)
         {
             switch (role)
@@ -221,6 +225,7 @@ namespace CustomisableUI
                 Saturation = s.Saturation / 100f,
                 Value = s.Brightness / 100f,
                 GradeEverything = s.GradeEverything,
+                Background = BackgroundStyle.From(s), // [Backgrounds]
             };
 
             snapshot.PanelSurface = Contrast.PanelSurface(snapshot.Panel);

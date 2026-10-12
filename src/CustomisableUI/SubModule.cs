@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using CustomisableUI.Backgrounds;
 using HarmonyLib;
 using TaleWorlds.MountAndBlade;
 
@@ -8,16 +10,18 @@ namespace CustomisableUI
 {
     public class SubModule : MBSubModuleBase
     {
-        private static readonly Type[] PatchTypes =
-        {
-            typeof(BrushRendererRenderPatch),
-            typeof(WidgetRenderPatch),
-            typeof(DrawSpritePatch),
-            typeof(BrushTextMaterialPatch),
-            typeof(StyleTextMaterialPatch),
-            typeof(FontMappingPatch),
-            typeof(TextSizePatch),
-        };
+        private static readonly Type[] PatchTypes = new[]
+            {
+                typeof(BrushRendererRenderPatch),
+                typeof(WidgetRenderPatch),
+                typeof(DrawSpritePatch),
+                typeof(BrushTextMaterialPatch),
+                typeof(StyleTextMaterialPatch),
+                typeof(FontMappingPatch),
+                typeof(TextSizePatch),
+            }
+            .Concat(BackgroundFeature.PatchTypes) // [Backgrounds] its hooks are listed in Backgrounds\BackgroundPatches.cs
+            .ToArray();
 
         protected override void OnSubModuleLoad()
         {
@@ -45,16 +49,22 @@ namespace CustomisableUI
         {
             base.OnApplicationTick(dt);
             Hotkey.Tick();
+
+            try
+            {
+                BackgroundFeature.Tick(ThemeState.Current); // [Backgrounds]
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Loading the background pictures", ex);
+            }
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            // <module>\bin\<platform>\CustomisableUI.dll  ->  <module>\UiRoles.txt
-            string binFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string moduleFolder = binFolder == null ? null : Directory.GetParent(Directory.GetParent(binFolder).FullName)?.FullName;
-            RoleOverrides.Load(moduleFolder == null ? "UiRoles.txt" : Path.Combine(moduleFolder, "UiRoles.txt"));
+            RoleOverrides.Load(Path.Combine(ModulePaths.Root, "UiRoles.txt"));
         }
     }
 }

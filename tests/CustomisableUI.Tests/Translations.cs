@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using MCM.Abstractions;
@@ -82,10 +83,14 @@ namespace CustomisableUI.Tests
                 all.Add(new Entry(id + " (group)", Read(definition, "GroupName")));
             }
 
-            AddAll(all, "font choice", ModSettings.FontChoices);
-            AddAll(all, "contrast choice", ModSettings.ContrastChoices);
-            AddAll(all, "status choice", ModSettings.StatusChoices);
-            AddAll(all, "hotkey choice", ModSettings.HotkeyChoices.Where(choice => !KeyNames.Contains(choice)));
+            // Every dropdown list declared on the settings class (FontChoices, StatusChoices... and any a feature adds, such as
+            // the custom backgrounds'), found by name so that a new list can't be left out of the template.
+            foreach (FieldInfo list in typeof(ModSettings)
+                .GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                .Where(f => f.FieldType == typeof(string[]) && f.Name.EndsWith("Choices", StringComparison.Ordinal)))
+            {
+                AddAll(all, list.Name, ((string[])list.GetValue(null)).Where(choice => !KeyNames.Contains(choice)));
+            }
             AddAll(all, "colour name", Swatches.TextNames());
             all.Add(new Entry("hotkey message (vanilla look)", Hotkey.VanillaLookMessage));
             all.Add(new Entry("hotkey message (theme back)", Hotkey.ThemeBackMessage));
@@ -204,6 +209,10 @@ namespace CustomisableUI.Tests
             Check.That(problems.Count == 0, "every string shown to the player is tagged for translation (" + entries.Count + " checked)");
             Check.That(strings.Count >= 150, "the English template has its full set of strings (" + strings.Count + ")");
             Check.That(entries.Count(e => e.Where.StartsWith("preset ", StringComparison.Ordinal)) >= 22, "all the presets are among them");
+            foreach (string list in new[] { "FontChoices", "ContrastChoices", "StatusChoices", "HotkeyChoices", "BackgroundFitChoices", "LoadingBackgroundChoices" })
+            {
+                Check.That(entries.Any(e => e.Where.StartsWith(list, StringComparison.Ordinal)), "the " + list + " dropdown is among them");
+            }
 
             // The game's own text system must turn every tagged string into exactly its English text when no translation is
             // loaded: that is what English players (and anyone in an untranslated language) will see.

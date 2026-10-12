@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+New
+- **Custom backgrounds.** Put PNG or JPG pictures in `Backgrounds\MainMenu` or `Backgrounds\Loading` inside the mod and
+  they are shown behind the main menu and on the loading screens (and the few menus that reuse the loading pictures).
+  Nothing changes while the folders are empty. See the README.txt in each folder.
+- **Loading screens setting.** Choose whether the loading screens show only your pictures, yours mixed with the game's,
+  or only the game's. Works with War Sails, which has its own set of loading pictures. A *Backgrounds* group in the
+  settings holds this, the on/off switch and *Picture fit* (fill or stretch).
+
+Changed
+- The custom backgrounds code is kept together in `src/CustomisableUI/Backgrounds`, with its own README.
+
 ## 1.2.0
 
 New
