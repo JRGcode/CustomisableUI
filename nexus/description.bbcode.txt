@@ -11,6 +11,7 @@ Restyle Bannerlord's interface from the Mod Configuration Menu: recolour panels,
 [*][b]Ally, enemy and neutral colours:[/b] choose a colour for each, applied (with a switch per item) to settlement bars and party names and troop counts on the campaign map, party tooltips, and battle markers.
 [*][b]Good, bad and warning colours:[/b] one palette for gains, losses and warnings, including a colour-blind-safe option.
 [*][b]Crosshair:[/b] colour of the crosshair, its blocked state, the hit marker and the kill/headshot marker, plus opacity.
+[*][b]Custom backgrounds:[/b] put your own PNG or JPG pictures in the mod's [i]Backgrounds[/i] folder and they replace the main menu background and the loading screens. Choose whether the loading screens show only your pictures, yours mixed with the game's, or only the game's. Works with War Sails too. Nothing changes until you add pictures.
 [*][b]Presets:[/b] one-click themes at the top of the page that set everything together. 15 colour pairs: Black and Gold, Purple and Gold, Red and White, Black and Red, Black and White, Navy and Silver, Blue and Gold, Green and Gold, Green and White, Burgundy and Cream, Teal and Cream, Orange and Black, Rose and Cream, Slate and Sky Blue, Parchment and Ink. Fine-tune any of them afterwards.
 [*][b]Accessibility:[/b] seven "Accessible: ..." presets (High Contrast dark and light, Yellow on Black for low vision, Large Text, Colour-blind Safe, Easy Reading, Low Glare). A "Minimum text contrast" setting holds any colour choice to the WCAG 3:1, 4.5:1 or 7:1 standard, and red/green status text can be swapped for colour-blind-safe orange and blue.
 [*][b]Hotkey:[/b] Ctrl+Shift+U (or F8, F9, F10) switches between your theme and the vanilla look from anywhere, including the settings screen, so a combination that is hard to read is never a trap.
@@ -25,6 +26,8 @@ Restyle Bannerlord's interface from the Mod Configuration Menu: recolour panels,
 [*]If something is recoloured that shouldn't be, add a rule to [i]UiRoles.txt[/i] in the mod folder. Turn on "Write a debug log" to see the names the mod is working from.
 [*]Fonts are limited to the game's own typefaces; long passages (conversations, encyclopedia) keep their vanilla text size.
 [*]The 3D party models and banners on the map, minimaps and the outlines around characters are drawn by the engine, not the interface, so they can't be recoloured.
+[*]Custom backgrounds: add pictures to [i]Modules\CustomisableUI\Backgrounds\MainMenu[/i] (behind the main menu; one is picked at random each time) and [i]...\Backgrounds\Loading[/i] (the loading screens). Each folder has a README. 1920x1080 or larger looks best, but keep each to 4K or smaller. The main menu's own video keeps playing underneath your picture, so its music carries on.
+[*]Updating or reinstalling the mod may replace the Backgrounds folders, so keep a copy of your pictures somewhere else.
 [/list]
 
 [size=4][b]Requirements[/b][/size]

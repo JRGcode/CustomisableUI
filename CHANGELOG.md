@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.3.0
 
 New
 - **Custom backgrounds.** Put PNG or JPG pictures in `Backgrounds\MainMenu` or `Backgrounds\Loading` inside the mod and
