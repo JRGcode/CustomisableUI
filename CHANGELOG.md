@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.4.0
 
 New
 - **Flat panels.** A new *Panel style* setting. *Flat* draws panels as a plain rectangle of exactly the colour you pick,

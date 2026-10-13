@@ -4,7 +4,7 @@
        (the $version$ token) and into the release zip name. <GameVersion> fills SubModule.xml's $gameversion$ token. -->
   <PropertyGroup>
     <ModuleId>CustomisableUI</ModuleId>
-    <Version>1.3.0</Version>
+    <Version>1.4.0</Version>
     <GameVersion>v1.4.8</GameVersion>
   </PropertyGroup>
 
