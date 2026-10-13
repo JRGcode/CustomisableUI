@@ -9,7 +9,7 @@ namespace CustomisableUI
     {
         // Sprites drawn as a flat fill of their layer colour. Multiplying one of these by a tint would just darken it,
         // so for them the tint replaces the colour (keeping the layer's own transparency).
-        private static bool IsFlatFill(string spriteName)
+        internal static bool IsFlatFill(string spriteName)
         {
             return spriteName != null && spriteName.StartsWith("BlankWhite", StringComparison.OrdinalIgnoreCase);
         }
@@ -68,12 +68,78 @@ namespace CustomisableUI
                 }
             }
 
+            ApplyGrading(theme, material);
+        }
+
+        private static void ApplyGrading(ThemeSnapshot theme, SimpleMaterial material)
+        {
             if (theme.HasGrading)
             {
                 material.HueFactor += theme.Hue;
                 material.SaturationFactor = Clamp(material.SaturationFactor + theme.Saturation, -1f, 1f);
                 material.ValueFactor = Clamp(material.ValueFactor + theme.Value, -1f, 1f);
             }
+        }
+
+        // ---- flat panels (see FlatPanels) ------------------------------------------------------------------------
+
+        // The colour a panel starts from before the chosen colour is blended in (what "0% strength" means for a flat fill).
+        private const float FlatPanelBase = 0.08f;
+
+        // How far a nested panel is moved toward white (or black, for a pale panel) per level, at full "flat panel depth".
+        internal const float DepthStep = 0.10f;
+
+        // Colours at or above this relative luminance count as pale: nested panels go darker rather than lighter.
+        private const float PaleSurface = 0.35f;
+
+        // Panels this fraction of the screen or more are windows; smaller ones sit inside a window (level 1), and the
+        // smallest (rows, slots) inside those (level 2). Size is the only thing the draw hook can see of nesting.
+        internal const float WindowFraction = 0.20f;
+        internal const float InnerFraction = 0.04f;
+
+        internal static int DepthLevel(float screenFraction)
+        {
+            return screenFraction >= WindowFraction ? 0 : screenFraction >= InnerFraction ? 1 : 2;
+        }
+
+        // The colour a flat window is before anything adjusts it: the chosen colour exactly, at full strength. Lower
+        // strengths fade it toward a neutral dark.
+        internal static Color FlatPanelStart(RoleStyle style)
+        {
+            return Blend(new Color(FlatPanelBase, FlatPanelBase, FlatPanelBase, 1f), style.Colour, style.Strength);
+        }
+
+        // The colour of a flat panel at a nesting level (0 = a window), given the colour of a window.
+        internal static Color FlatPanelColour(Color window, int level, float depth)
+        {
+            if (level <= 0 || depth <= 0f)
+            {
+                return window;
+            }
+
+            float toward = Contrast.Luminance(window) >= PaleSurface ? 0f : 1f;
+            return Blend(window, new Color(toward, toward, toward, 1f), Math.Min(1f, DepthStep * level * depth));
+        }
+
+        // Styles a panel that is being drawn as a plain fill. `screenFraction` is how much of the screen it covers.
+        public static void ApplyToFlatPanel(ThemeSnapshot theme, SimpleMaterial material, float screenFraction)
+        {
+            RoleStyle style = theme.Panel;
+            Color fill = FlatPanelColour(theme.PanelFill, DepthLevel(screenFraction), theme.PanelDepth);
+
+            // Keeps the layer's own transparency, as every other styler does.
+            material.Color = new Color(fill.Red, fill.Green, fill.Blue, material.Color.Alpha);
+
+            float brightness = FlatBrightness(style);
+            if (brightness != 1f)
+            {
+                material.ColorFactor *= brightness;
+            }
+            if (style.Opacity != 1f)
+            {
+                material.AlphaFactor *= style.Opacity;
+            }
+            ApplyGrading(theme, material);
         }
 
         // brushName and styleName identify the text being drawn where the game says (plain text drawn through a

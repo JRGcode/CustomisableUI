@@ -5,6 +5,7 @@ Restyle Bannerlord's interface from the Mod Configuration Menu: recolour panels,
 [size=4][b]Features[/b][/size]
 [list]
 [*][b]Panels, frames and buttons:[/b] pick a named colour or enter any #RRGGBB code, then set strength, brightness and (for panels) opacity. Buttons include dropdowns, slider tracks and knobs, checkboxes and list entries.
+[*][b]Flat panels:[/b] set Panel style to Flat and panels become a plain fill of exactly the colour you picked, instead of tinted artwork. Each panel gets a thin, slightly darker edge, and panels inside a window are drawn a step lighter (or darker, for a pale colour), so neighbouring panels stay distinct.
 [*][b]Text:[/b] recolour all text (or let the mod pick light or dark to suit your panels), add an outline or a soft shadow, and adjust brightness.
 [*][b]Fonts and size:[/b] choose the main and decorative fonts from the game's built-in typefaces, and scale text from 75% to 135%.
 [*][b]Colour grading:[/b] hue shift, saturation and brightness across the interface.
@@ -21,7 +22,8 @@ Restyle Bannerlord's interface from the Mod Configuration Menu: recolour panels,
 
 [size=4][b]Good to know[/b][/size]
 [list]
-[*]Colours are tints applied to the game's existing artwork, so dark tints give dark results. Use the brightness sliders to compensate.
+[*]Colours are tints applied to the game's existing artwork, so dark tints give dark results. Use the brightness sliders to compensate, or set Panel style to Flat to get exactly the colour you pick.
+[*]With Flat panels, a mid-tone colour that no text can be read on is nudged lighter or darker just enough to be readable. Turn off "Keep text readable" for the exact colour. Choosing a preset puts the panel style back to Textured.
 [*]Icons, banners, bars and scrollbars are deliberately left alone, so nothing changes meaning.
 [*]If something is recoloured that shouldn't be, add a rule to [i]UiRoles.txt[/i] in the mod folder. Turn on "Write a debug log" to see the names the mod is working from.
 [*]Fonts are limited to the game's own typefaces; long passages (conversations, encyclopedia) keep their vanilla text size.

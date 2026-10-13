@@ -15,7 +15,7 @@ namespace CustomisableUI.Tests
     internal static class BackgroundChecks
     {
         // Stands in for a texture the engine would have made.
-        private sealed class FakeTexture : ITexture
+        internal sealed class FakeTexture : ITexture
         {
             public bool IsValid => true;
 

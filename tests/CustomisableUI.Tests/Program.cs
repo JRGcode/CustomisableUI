@@ -49,6 +49,9 @@ namespace CustomisableUI.Tests
                 return null;
             };
 
+            // Whatever the mod logs while it is being tested goes to a file of its own, not the game's log.
+            Log.PathOverride = Path.Combine(Path.GetTempPath(), "CustomisableUI-tests.log");
+
             // "-- --write-strings" regenerates the English language file from the code instead of running the checks.
             if (Array.IndexOf(args, "--write-strings") >= 0)
             {
@@ -71,6 +74,7 @@ namespace CustomisableUI.Tests
             Tests.ScreenDimmingChecks();
             Tests.GameDataChecks();
             Tests.HooksChecks();
+            FlatPanelChecks.Run();
             BackgroundChecks.Run();
             Translations.Checks();
 

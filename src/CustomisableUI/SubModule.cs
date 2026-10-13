@@ -58,6 +58,15 @@ namespace CustomisableUI
             {
                 Log.Error("Loading the background pictures", ex);
             }
+
+            try
+            {
+                FlatPanels.Tick(ThemeState.Current);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Preparing flat panels", ex);
+            }
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()

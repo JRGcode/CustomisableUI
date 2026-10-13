@@ -137,6 +137,19 @@ namespace CustomisableUI
         public bool DebugLogging;
 
         public RoleStyle Panel;
+
+        // Panels are drawn as a plain fill of the panel colour rather than the game's artwork (see FlatPanels). Only ever
+        // true when there is a panel colour to fill with. PanelDepth (0..1) is how much lighter nested panels are.
+        public bool PanelFlat;
+        public float PanelDepth;
+
+        // How strong an edge a flat panel is drawn with: 0 = none, up to FlatPanels.MaxEdgeLevel.
+        public int PanelOutline;
+
+        // What a flat window is filled with, before the brightness setting: the panel colour, moved a little toward
+        // black or white where "keep text readable" needs it (see Contrast.ReadableFill).
+        public Color PanelFill;
+
         public RoleStyle Frame;
         public RoleStyle Button;
         public TextStyle Text;
@@ -228,9 +241,25 @@ namespace CustomisableUI
                 Background = BackgroundStyle.From(s), // [Backgrounds]
             };
 
-            snapshot.PanelSurface = Contrast.PanelSurface(snapshot.Panel);
-            snapshot.ButtonSurface = Contrast.ButtonSurface(snapshot.Button);
             snapshot.ContrastTarget = Contrast.TargetFor(s.ContrastTarget.SelectedIndex);
+            snapshot.ButtonSurface = Contrast.ButtonSurface(snapshot.Button);
+
+            snapshot.PanelFlat = s.PanelStyle.SelectedIndex == 1 && snapshot.Panel.Tint;
+            snapshot.PanelDepth = Math.Max(0f, Math.Min(1f, s.PanelDepth));
+            snapshot.PanelOutline = Math.Max(0, Math.Min(FlatPanels.MaxEdgeLevel, s.PanelOutline.SelectedIndex));
+            Color? flatFill = null;
+            if (snapshot.PanelFlat)
+            {
+                snapshot.PanelFill = Stylers.FlatPanelStart(snapshot.Panel);
+                if (s.KeepTextReadable)
+                {
+                    snapshot.PanelFill = Contrast.ReadableFill(snapshot.PanelFill, Stylers.FlatBrightness(snapshot.Panel),
+                        snapshot.PanelDepth, snapshot.ContrastTarget, snapshot.ButtonSurface);
+                }
+                flatFill = snapshot.PanelFill;
+            }
+
+            snapshot.PanelSurface = Contrast.PanelSurface(snapshot.Panel, flatFill);
 
             snapshot.Relations = new RelationStyle
             {
