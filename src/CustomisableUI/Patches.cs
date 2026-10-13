@@ -213,6 +213,32 @@ namespace CustomisableUI
 
                 if (!keptColour)
                 {
+                    // A panel in the flat style becomes a plain fill of the panel colour (box was worked out above, as the
+                    // role is Panel); anything that can't be drawn flat is tinted like the rest.
+                    if (role == UiRole.Panel && theme.PanelFlat)
+                    {
+                        string original = sprite.Name;
+                        float originalAlpha = material.Color.Alpha * material.AlphaFactor;
+                        if (FlatPanels.TryFlatten(ref sprite, brush, material, box, theme.PanelOutline))
+                        {
+                            if (theme.DebugLogging)
+                            {
+                                DebugRecorder.Note("flat panels: made flat: " + (viaBrush ? "brush" : "widget") + " brush='" + brush +
+                                                   "' sprite='" + original + "' size=" + (int)box.Width + "x" + (int)box.Height +
+                                                   " alpha=" + originalAlpha.ToString("0.00"));
+                            }
+
+                            Stylers.ApplyToFlatPanel(theme, material, RoleClassifier.ScreenFraction(box));
+                            return true;
+                        }
+
+                        if (theme.DebugLogging)
+                        {
+                            DebugRecorder.Note("flat panels: left textured: sprite='" + sprite.Name + "' nine-patch=" +
+                                               sprite.NinePatchParameters.IsValid + (FlatPanels.Fill == null ? " (fill not ready)" : string.Empty));
+                        }
+                    }
+
                     Stylers.ApplyToSprite(theme, material, role, sprite.Name);
                 }
             }

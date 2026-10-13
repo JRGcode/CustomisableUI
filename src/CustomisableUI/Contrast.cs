@@ -35,8 +35,15 @@ namespace CustomisableUI
         // Typical encoded brightness (0..1) of the vanilla chrome artwork a tint is multiplied with.
         private const float ArtworkLevel = 0.30f;
 
-        public static float PanelSurface(RoleStyle panel)
+        // `flatFill` is set for the flat panel style: every panel is then a plain fill of that colour, so that is the surface
+        // (the textured estimate no longer applies, and neither does the toned-down fill).
+        public static float PanelSurface(RoleStyle panel, Color? flatFill = null)
         {
+            if (flatFill.HasValue)
+            {
+                return Luminance(Scale(flatFill.Value, Stylers.FlatBrightness(panel)));
+            }
+
             float flat = panel.Tint
                 ? Luminance(Scale(Stylers.FlatFill(new Color(0f, 0f, 0f, 1f), panel), Stylers.FlatBrightness(panel)))
                 : 0f;
@@ -46,6 +53,55 @@ namespace CustomisableUI
         public static float ButtonSurface(RoleStyle button)
         {
             return TexturedSurface(button);
+        }
+
+        // A flat panel is exactly the chosen colour, and a mid-tone colour is one that the text colour in use can't be read
+        // on. One text colour (light or dark) serves panels and buttons alike, so this takes the better of the two for both
+        // surfaces; it returns the colour unchanged when that text can be read on it (at every nesting level, as deeper
+        // panels are a little lighter or darker), and otherwise the colour moved toward black or white by as little as it
+        // takes. `brightness` is what the draw multiplies the colour by (Stylers.FlatBrightness).
+        public static Color ReadableFill(Color window, float brightness, float depth, float target, float buttonSurface)
+        {
+            float forLight = Math.Min(WorstRatio(LightText, window, brightness, depth), Ratio(Luminance(LightText), buttonSurface));
+            float forDark = Math.Min(WorstRatio(DarkText, window, brightness, depth), Ratio(Luminance(DarkText), buttonSurface));
+            if (Math.Max(forLight, forDark) >= target)
+            {
+                return window;
+            }
+
+            bool light = forLight >= forDark;
+            Color text = light ? LightText : DarkText;
+            Color extreme = light ? new Color(0f, 0f, 0f, 1f) : new Color(1f, 1f, 1f, 1f);
+
+            // The smallest move toward the extreme that reaches the target (or the whole way, if even that falls short).
+            float low = 0f;
+            float high = 1f;
+            for (int i = 0; i < 16; i++)
+            {
+                float mid = (low + high) / 2f;
+                if (WorstRatio(text, Stylers.Blend(window, extreme, mid), brightness, depth) >= target)
+                {
+                    high = mid;
+                }
+                else
+                {
+                    low = mid;
+                }
+            }
+            return Stylers.Blend(window, extreme, high);
+        }
+
+        // The lowest contrast `text` has against a flat panel at any nesting level.
+        private static float WorstRatio(Color text, Color window, float brightness, float depth)
+        {
+            float textLuminance = Luminance(text);
+            float worst = float.MaxValue;
+            for (int level = 0; level <= 2; level++)
+            {
+                float surface = Luminance(Scale(Stylers.FlatPanelColour(window, level, depth), brightness));
+                worst = Math.Min(worst, Ratio(textLuminance, surface));
+            }
+            return worst;
         }
 
         // The better of light and dark text: the one whose worst contrast across the given surfaces is highest.

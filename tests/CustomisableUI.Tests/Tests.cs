@@ -125,6 +125,7 @@ namespace CustomisableUI.Tests
                 "ContrastTarget", "ShadowStrength", "MainFont", "HueShift", "AllyColour", "RelationNameplates",
                 "GoodColour", "BadColour", "WarningColour", "StatusColours", "CrosshairColour", "BlockedColour",
                 "HitMarkerColour", "KillMarkerColour", "CrosshairOpacity", "CustomBackgrounds", "BackgroundFit",
+                "PanelStyle", "PanelDepth", "PanelOutline",
             })
             {
                 Check.That(ids.Contains(expected), "option '" + expected + "' is on the screen");

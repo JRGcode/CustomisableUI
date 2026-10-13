@@ -25,17 +25,23 @@
     <string id="CUI_KeepOtherModColours_Hint" text="Compatibility with mods that colour the interface to mean something, such as item rows tinted by quality. Panels, buttons and text that are already a clearly coloured shade (not black, white, grey or the game's usual browns) are left alone instead of being themed. A few of the game's own coloured buttons and panels stay as they are too." />
     <string id="CUI_ToggleHotkey" text="Hotkey: show vanilla look" />
     <string id="CUI_ToggleHotkey_Hint" text="Press to switch between your theme and the game's vanilla look, from anywhere (including this screen). Handy for comparing, and a way out if a combination makes the interface hard to read. Press again to bring your theme back." />
-    <string id="CUI_PanelColour" text="Panel colour" />
-    <string id="CUI_PanelColour_Hint" text="Tint for window and panel backgrounds. The tint is multiplied with the original artwork, so pair darker colours with a higher brightness." />
+    <string id="CUI_PanelStyle" text="Panel style" />
+    <string id="CUI_PanelStyle_Hint" text="Textured keeps the game's panel artwork and tints it. Flat replaces the artwork with a plain fill of exactly the colour below, so what you pick is what you get. Flat needs a panel colour: with 'Vanilla (no change)' the panels stay textured." />
     <string id="CUI_Group_Panels" text="2. Panels &amp; backgrounds" />
+    <string id="CUI_PanelColour" text="Panel colour" />
+    <string id="CUI_PanelColour_Hint" text="Tint for window and panel backgrounds. In the textured style the tint is multiplied with the original artwork, so pair darker colours with a higher brightness. In the flat style it is the colour itself." />
     <string id="CUI_PanelHex" text="Panel custom colour" />
     <string id="CUI_PanelHex_Hint" text="Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB, e.g. #2A3F8F." />
     <string id="CUI_PanelStrength" text="Panel colour strength" />
     <string id="CUI_Hint_Strength" text="0% keeps the vanilla colour, 100% applies the full tint." />
     <string id="CUI_PanelBrightness" text="Panel brightness" />
-    <string id="CUI_PanelBrightness_Hint" text="1.00 is vanilla. Raise it if a dark tint makes panels too murky." />
+    <string id="CUI_PanelBrightness_Hint" text="1.00 is vanilla. Raise it if a dark tint makes panels too murky. With the flat style 1.00 is exactly your colour and the slider has a gentler effect." />
     <string id="CUI_PanelOpacity" text="Panel opacity" />
     <string id="CUI_PanelOpacity_Hint" text="Lower values let the game world show through panels. Keep it high enough to read text." />
+    <string id="CUI_PanelDepth" text="Flat panel depth" />
+    <string id="CUI_PanelDepth_Hint" text="Flat style only. Panels that sit inside a window (popups, lists, rows) are drawn a step lighter, or darker for a pale colour, so they stand out from the window behind. 0% makes every panel exactly the same colour." />
+    <string id="CUI_PanelOutline" text="Flat panel outline" />
+    <string id="CUI_PanelOutline_Hint" text="Flat style only. A thin, slightly darker edge around every flat panel, so neighbouring panels and list rows can be told apart. It shows most on lighter panel colours; on very dark ones the depth setting does more." />
     <string id="CUI_FrameColour" text="Frame colour" />
     <string id="CUI_FrameColour_Hint" text="Tint for the decorative borders around panels." />
     <string id="CUI_Group_Frames" text="3. Frames &amp; borders" />
@@ -142,6 +148,12 @@
     <string id="CUI_Font_Regular" text="Fira Sans Regular" />
     <string id="CUI_Font_Medium" text="Fira Sans Medium" />
     <string id="CUI_Font_Galahad" text="Galahad (decorative)" />
+    <string id="CUI_PanelStyle_Textured" text="Textured (the game's artwork, tinted)" />
+    <string id="CUI_PanelStyle_Flat" text="Flat (a plain fill of the colour)" />
+    <string id="CUI_PanelOutline_Off" text="Off" />
+    <string id="CUI_PanelOutline_Subtle" text="Subtle" />
+    <string id="CUI_PanelOutline_Normal" text="Normal" />
+    <string id="CUI_PanelOutline_Strong" text="Strong" />
     <string id="CUI_Contrast_Standard" text="Standard (3:1)" />
     <string id="CUI_Contrast_Good" text="Good (4.5:1, WCAG AA)" />
     <string id="CUI_Contrast_Best" text="Best (7:1, WCAG AAA)" />

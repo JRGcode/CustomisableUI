@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+New
+- **Flat panels.** A new *Panel style* setting. *Flat* draws panels as a plain rectangle of exactly the colour you pick,
+  instead of tinting the game's dark artwork, so colours come out as chosen and need no brightness compensation. Panels
+  inside a window (popups, lists, rows) are drawn a step lighter (darker for a pale colour) so they stand out; *Flat panel
+  depth* sets how much. Each flat panel also gets a thin, slightly darker edge so neighbouring panels can be told apart;
+  *Flat panel outline* sets how strong it is. Frames and buttons are unchanged. Textured stays the default. Art the game draws over
+  other things (gradients, shadows) and illustrations are never made flat.
+- With *Keep text readable* on, a flat panel colour that no text can be read on (a mid-tone such as teal or slate) is moved
+  toward black or white by just enough to reach the contrast target. Turn that off for the exact colour.
+
 ## 1.3.0
 
 New

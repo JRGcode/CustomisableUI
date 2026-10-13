@@ -35,7 +35,8 @@ The preset list: the accessibility presets come first, then 15 colour pairs.
 ## What it does
 
 - **Recolours the interface.** Panels and backgrounds, frames and borders, and buttons and controls each get a colour
-  (a named swatch or any `#RRGGBB`), a strength and a brightness; panels also get an opacity.
+  (a named swatch or any `#RRGGBB`), a strength and a brightness; panels also get an opacity. Panels can be tinted
+  artwork or **flat**: a plain fill of exactly the colour you pick.
 - **Colour grading.** Hue shift, saturation and brightness across all of the above, optionally including icons and artwork.
 - **Text.** Recolour all text (or let the mod pick light or dark to suit your panels), add an outline or a soft shadow,
   adjust brightness, and keep text readable against your colours using the WCAG contrast standard.
@@ -67,12 +68,12 @@ a quick way to compare. Press it again to bring your theme back. The settings th
 
 ## The settings screen
 
-65 options in 11 groups.
+68 options in 11 groups.
 
 | Group | Options |
 | --- | --- |
 | 1. General | Master switch; write a debug log; *Keep colours added by other mods*; hotkey. |
-| 2. Panels & backgrounds | Colour, custom hex, strength, brightness, opacity. |
+| 2. Panels & backgrounds | Style (textured or flat), colour, custom hex, strength, brightness, opacity, flat panel depth, flat panel outline. |
 | 3. Frames & borders | Colour, custom hex, strength, brightness. |
 | 4. Buttons | Colour, custom hex, strength, brightness. Covers buttons, dropdowns, slider tracks and knobs, checkboxes and list entries. |
 | 5. Text | Colour (or *Auto*), custom hex, strength; *Keep text readable* and its minimum contrast; brightness; outline colour and thickness; shadow strength and colour. |
@@ -144,6 +145,18 @@ Every preset is checked against its own contrast target by the test suite, so a 
 multiplied with the artwork**: a dark tint gives a dark result, and the brightness slider compensates. Flat-colour fills
 (most large window backgrounds and tooltips) are the exception: they take a toned-down version of the chosen colour, keep
 their own transparency, and respond less strongly to the brightness slider.
+
+**Flat panels.** Set *Panel style* to *Flat* and panels are drawn as a plain rectangle of exactly the colour you chose
+instead of tinted artwork, so there is no brightness compensation to do. It needs a panel colour (with *Vanilla* the panels
+stay as they are). Each flat panel gets a thin, slightly darker edge, built into the panel's own picture so it costs no
+extra drawing, so neighbouring panels, list rows and popups can be told apart; *Flat panel outline* sets how strong it is,
+or turns it off. (On a near-black panel colour the edge barely shows; the depth setting does more there.)
+Panels inside a window (popups, lists, rows) are also drawn a step lighter, or darker for a pale colour; *Flat panel
+depth* sets how much, and 0% makes every panel the same. Frames and buttons are separate and keep their artwork. Art the
+game draws over other things (gradients, shadows) and pictures are never made flat, so they can't hide what is under them. A mid-tone colour (teal, slate, forest green) is one that neither light nor
+dark text reads well on, so with *Keep text readable* on it is moved toward black or white by just enough to reach the
+contrast target; turn that off to get the colour exactly. Choosing a preset puts the panel style back to textured, since
+the presets' brightness values are made for tinted artwork.
 
 **Readable text.** With *Keep text readable* on (the default) the mod estimates how light or dark your panel and button
 colours will look and, if the chosen text colour (or vanilla text) would be hard to read on them, uses light or dark text

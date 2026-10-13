@@ -38,6 +38,22 @@ namespace CustomisableUI
             "{=CUI_Font_Galahad}Galahad (decorative)",
         };
 
+        // The order matters: ThemeSnapshot reads index 1 as flat.
+        internal static readonly string[] PanelStyleChoices =
+        {
+            "{=CUI_PanelStyle_Textured}Textured (the game's artwork, tinted)",
+            "{=CUI_PanelStyle_Flat}Flat (a plain fill of the colour)",
+        };
+
+        // The order matters: the index is how strong the edge is (FlatPanels.EdgedPng).
+        internal static readonly string[] PanelOutlineChoices =
+        {
+            "{=CUI_PanelOutline_Off}Off",
+            "{=CUI_PanelOutline_Subtle}Subtle",
+            "{=CUI_PanelOutline_Normal}Normal",
+            "{=CUI_PanelOutline_Strong}Strong",
+        };
+
         internal static readonly string[] ContrastChoices =
         {
             "{=CUI_Contrast_Standard}Standard (3:1)",
@@ -101,31 +117,51 @@ namespace CustomisableUI
 
         // ---- Panels ----------------------------------------------------------------------------------------------
 
-        [SettingPropertyDropdown("{=CUI_PanelColour}Panel colour", Order = 0, RequireRestart = false,
-            HintText = "{=CUI_PanelColour_Hint}Tint for window and panel backgrounds. The tint is multiplied with the original artwork, " +
-                       "so pair darker colours with a higher brightness.")]
+        [SettingPropertyDropdown("{=CUI_PanelStyle}Panel style", Order = 0, RequireRestart = false,
+            HintText = "{=CUI_PanelStyle_Hint}Textured keeps the game's panel artwork and tints it. Flat replaces the artwork with a plain " +
+                       "fill of exactly the colour below, so what you pick is what you get. Flat needs a panel colour: with " +
+                       "'Vanilla (no change)' the panels stay textured.")]
+        [SettingPropertyGroup(Panels, GroupOrder = 1)]
+        public Dropdown<string> PanelStyle { get; set; } = new Dropdown<string>(PanelStyleChoices, 0);
+
+        [SettingPropertyDropdown("{=CUI_PanelColour}Panel colour", Order = 1, RequireRestart = false,
+            HintText = "{=CUI_PanelColour_Hint}Tint for window and panel backgrounds. In the textured style the tint is multiplied with " +
+                       "the original artwork, so pair darker colours with a higher brightness. In the flat style it is the colour itself.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public Dropdown<string> PanelColour { get; set; } = new Dropdown<string>(Swatches.AllNames(), 0);
 
-        [SettingPropertyText("{=CUI_PanelHex}Panel custom colour", 1, false,
+        [SettingPropertyText("{=CUI_PanelHex}Panel custom colour", 2, false,
             "{=CUI_PanelHex_Hint}Used when 'Custom (use hex code)' is picked above. Format: #RRGGBB, e.g. #2A3F8F.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public string PanelHex { get; set; } = "#2A3F8F";
 
-        [SettingPropertyFloatingInteger("{=CUI_PanelStrength}Panel colour strength", 0f, 1f, "0%", Order = 2, RequireRestart = false,
+        [SettingPropertyFloatingInteger("{=CUI_PanelStrength}Panel colour strength", 0f, 1f, "0%", Order = 3, RequireRestart = false,
             HintText = "{=CUI_Hint_Strength}0% keeps the vanilla colour, 100% applies the full tint.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public float PanelStrength { get; set; } = 1f;
 
-        [SettingPropertyFloatingInteger("{=CUI_PanelBrightness}Panel brightness", 0.3f, 2.5f, "0.00", Order = 3, RequireRestart = false,
-            HintText = "{=CUI_PanelBrightness_Hint}1.00 is vanilla. Raise it if a dark tint makes panels too murky.")]
+        [SettingPropertyFloatingInteger("{=CUI_PanelBrightness}Panel brightness", 0.3f, 2.5f, "0.00", Order = 4, RequireRestart = false,
+            HintText = "{=CUI_PanelBrightness_Hint}1.00 is vanilla. Raise it if a dark tint makes panels too murky. With the flat style " +
+                       "1.00 is exactly your colour and the slider has a gentler effect.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public float PanelBrightness { get; set; } = 1f;
 
-        [SettingPropertyFloatingInteger("{=CUI_PanelOpacity}Panel opacity", 0.1f, 1f, "0%", Order = 4, RequireRestart = false,
+        [SettingPropertyFloatingInteger("{=CUI_PanelOpacity}Panel opacity", 0.1f, 1f, "0%", Order = 5, RequireRestart = false,
             HintText = "{=CUI_PanelOpacity_Hint}Lower values let the game world show through panels. Keep it high enough to read text.")]
         [SettingPropertyGroup(Panels, GroupOrder = 1)]
         public float PanelOpacity { get; set; } = 1f;
+
+        [SettingPropertyFloatingInteger("{=CUI_PanelDepth}Flat panel depth", 0f, 1f, "0%", Order = 6, RequireRestart = false,
+            HintText = "{=CUI_PanelDepth_Hint}Flat style only. Panels that sit inside a window (popups, lists, rows) are drawn a step lighter, " +
+                       "or darker for a pale colour, so they stand out from the window behind. 0% makes every panel exactly the same colour.")]
+        [SettingPropertyGroup(Panels, GroupOrder = 1)]
+        public float PanelDepth { get; set; } = 0.5f;
+
+        [SettingPropertyDropdown("{=CUI_PanelOutline}Flat panel outline", Order = 7, RequireRestart = false,
+            HintText = "{=CUI_PanelOutline_Hint}Flat style only. A thin, slightly darker edge around every flat panel, so neighbouring panels and list rows " +
+                       "can be told apart. It shows most on lighter panel colours; on very dark ones the depth setting does more.")]
+        [SettingPropertyGroup(Panels, GroupOrder = 1)]
+        public Dropdown<string> PanelOutline { get; set; } = new Dropdown<string>(PanelOutlineChoices, 2);
 
         // ---- Frames ----------------------------------------------------------------------------------------------
 

@@ -9,12 +9,17 @@ namespace CustomisableUI
     internal static class Log
     {
         private static readonly object Gate = new object();
-        private static readonly string FilePath = Path.Combine(
+        private static readonly string DefaultPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
             "Mount and Blade II Bannerlord", "Logs", "CustomisableUI.log");
 
         private static readonly HashSet<string> ReportedErrors = new HashSet<string>();
         private static bool _started;
+
+        // The tests write somewhere of their own so that running them can't overwrite the log of a game session.
+        internal static string PathOverride { get; set; }
+
+        private static string FilePath => PathOverride ?? DefaultPath;
 
         public static string LogPath => FilePath;
 

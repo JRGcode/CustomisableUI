@@ -66,8 +66,8 @@ namespace CustomisableUI
         private static long _screenCheckedAt;
 
         // A widget-attached sprite smaller than this (in pixels) is a decoration, not a panel.
-        private const float LargeBackgroundMinWidth = 250f;
-        private const float LargeBackgroundMinHeight = 160f;
+        internal const float LargeBackgroundMinWidth = 250f;
+        internal const float LargeBackgroundMinHeight = 160f;
 
         private struct Key : IEquatable<Key>
         {
@@ -161,6 +161,16 @@ namespace CustomisableUI
             return _screenWidth > 0f && _screenHeight > 0f &&
                    box.Width >= _screenWidth * FullScreenFraction &&
                    box.Height >= _screenHeight * FullScreenFraction;
+        }
+
+        // How much of the screen an area covers (1 = all of it). When the screen size is not known it says 1, which is the
+        // answer that leads to nothing being treated as small.
+        public static float ScreenFraction(TaleWorlds.TwoDimension.SimpleRectangle box)
+        {
+            RefreshScreenSize();
+            return _screenWidth > 0f && _screenHeight > 0f
+                ? Math.Min(1f, box.Width * box.Height / (_screenWidth * _screenHeight))
+                : 1f;
         }
 
         // The resolution is read at most about once a second; it only changes when the player changes video settings.
