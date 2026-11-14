@@ -4,7 +4,7 @@ A Mount & Blade II: Bannerlord mod that lets you restyle the game's interface fr
 [MCM](https://www.nexusmods.com/mountandblade2bannerlord/mods/612) settings screen. Changes apply live, including on
 the settings screen itself, and nothing is stored in save games, so the mod can be added or removed at any time.
 
-Built against Bannerlord **v1.4.8**. Requires [Harmony](https://www.nexusmods.com/mountandblade2bannerlord/mods/2006)
+Built against Bannerlord **v1.5.7**. Requires [Harmony](https://www.nexusmods.com/mountandblade2bannerlord/mods/2006)
 and [MCM v5](https://www.nexusmods.com/mountandblade2bannerlord/mods/612) (which itself needs ButterLib and UIExtenderEx).
 
 ## Screenshots

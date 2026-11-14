@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.1
+
+Changed
+- Built for Bannerlord v1.5.7 and compiled against it: all of the mod's hooks and the game's brush data were checked
+  against 1.5.7. The mod now requires v1.5.7 or later. No settings or behaviour changed. Players still on v1.4.8 should
+  keep using 1.4.0.
+
 ## 1.4.0
 
 New
